@@ -3,17 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceListEditor.Application", "PriceListEditor.Application\PriceListEditor.Application.csproj", "{09EBB10E-D08A-4DAB-A2E6-BA02CB0A8C12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceListEditor.Application", "PriceListEditor.Application\PriceListEditor.Application.csproj", "{09EBB10E-D08A-4DAB-A2E6-BA02CB0A8C12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceListEditor.Tests", "PriceListEditor.Tests\PriceListEditor.Tests.csproj", "{7FC38F80-D4B6-49D7-AC18-C213837D3D6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceListEditor.Tests", "PriceListEditor.Tests\PriceListEditor.Tests.csproj", "{7FC38F80-D4B6-49D7-AC18-C213837D3D6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{09EBB10E-D08A-4DAB-A2E6-BA02CB0A8C12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -24,5 +21,8 @@ Global
 		{7FC38F80-D4B6-49D7-AC18-C213837D3D6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FC38F80-D4B6-49D7-AC18-C213837D3D6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FC38F80-D4B6-49D7-AC18-C213837D3D6B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
