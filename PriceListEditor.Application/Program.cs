@@ -7,6 +7,7 @@ builder.Services.AddDbContext<PredpriyatieDBContext>(options => //allow connect 
 {//where objects and data mapped with hep of context class (PredpriyatieDBContext cs)
     options.UseSqlServer(builder.Configuration["ConnectionStrings:AppConnection"]);
 });
+builder.Services.AddScoped<IProductRepository,EFProductRepository>();//create repository service where http requests get it`s own repository object(usual way to use EF Core)
 var app = builder.Build();
 
 //app.MapGet("/", () => "Hello World!");
