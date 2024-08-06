@@ -13,5 +13,5 @@ var app = builder.Build();
 //app.MapGet("/", () => "Hello World!");
 app.UseStaticFiles();//use static content from wwwroot folder
 app.MapDefaultControllerRoute();//registers MVC framework as source of endpoint by using default convention of mapping requests to classes and methods
-
+SeedData.EnsurePopulated(app);//fill db with sample data values//dotnet ef database drop --force --context PredpriyatieDBContext
 app.Run();
