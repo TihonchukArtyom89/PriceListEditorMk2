@@ -12,7 +12,7 @@ using PriceListEditor.Application.Models;
 namespace PriceListEditor.Application.Migrations
 {
     [DbContext(typeof(PredpriyatieDBContext))]
-    [Migration("20240805160510_Initial")]
+    [Migration("20240807161323_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,9 +32,9 @@ namespace PriceListEditor.Application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long?>("ProductID"), 1L, 1);
 
-                    b.Property<long?>("CategoryID")
+                    b.Property<string>("ProductCategory")
                         .IsRequired()
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductDescription")
                         .IsRequired()
