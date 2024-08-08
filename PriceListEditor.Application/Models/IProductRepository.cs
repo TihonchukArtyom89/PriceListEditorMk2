@@ -2,7 +2,7 @@
 
 namespace PriceListEditor.Application.Models;
 
-public class IProductRepository
+public interface IProductRepository
 {
     IQueryable<Product>? Products { get; }
     //IQueryable<Category>? Categories { get; }
