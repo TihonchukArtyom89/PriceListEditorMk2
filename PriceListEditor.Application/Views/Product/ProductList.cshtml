@@ -1,0 +1,11 @@
+﻿@model IQueryable<Product>
+<h4> Cтраница списка продуктов</h4>
+<a href="@Url.Action("Index","Home")">Главная</a>
+@foreach(Product p in Model ?? Enumerable.Empty<Product>())
+{
+    <div>
+        <h3>@p.ProductName</h3>
+        @p.ProductDescription
+        <h4>@p.ProductPrice ₽</h4>
+    </div>
+}

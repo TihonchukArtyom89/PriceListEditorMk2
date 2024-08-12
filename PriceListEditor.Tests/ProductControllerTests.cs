@@ -14,7 +14,7 @@ public class ProductControllerTests
         }).AsQueryable<Product>());
         ProductController productController = new ProductController(mockRepository.Object);
         //Act
-        IEnumerable<Product>? result = (productController.ListOfProducts() as ViewResult)?.ViewData.Model as IEnumerable<Product>;
+        IEnumerable<Product>? result = (productController.ProductList() as ViewResult)?.ViewData.Model as IEnumerable<Product>;
         //Assert
         Product[] products = result?.ToArray() ?? Array.Empty<Product>();
         Assert.True(products.Length == 2);//Assert.Equal(2, products.Length);//одинаково
