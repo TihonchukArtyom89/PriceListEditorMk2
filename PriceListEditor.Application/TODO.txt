@@ -1,6 +1,7 @@
 ﻿to-do list:
--make pagination for product list view
+
 -styling views
 -add classes to data model of application for mapping with visual diagram of databases
+-make pagination for product list view
 -create category selector for product list view
 -add buttons with crud actions displaying on model popup on product list view
