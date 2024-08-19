@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PriceListEditor.Application.Models;
 //класс для формирования таблицы в бд посвящённой категориям товарой
+[Table("Categories")]
 public class Category
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
