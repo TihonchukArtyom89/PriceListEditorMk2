@@ -6,10 +6,10 @@ public class PageViewModel
 {
     public int NumberOfPages { get; private set; }
     public int TotalCountOfPages { get; private set; }
-    public PageViewModel(int count, int pageNumber, int pageSize)
+    public PageViewModel( int pageNumber, int pageSize, int? count=0)
     {
         NumberOfPages = pageNumber;
-        TotalCountOfPages = (int)Math.Ceiling(count / (double)pageSize);
+        TotalCountOfPages = (int)Math.Ceiling((double)(count! / (double)pageSize));
     }
     public bool HasPreviousPage
     {
