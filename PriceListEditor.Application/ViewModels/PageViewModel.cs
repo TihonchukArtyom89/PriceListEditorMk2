@@ -4,25 +4,25 @@ namespace PriceListEditor.Application.ViewModels;
 
 public class PageViewModel
 {
-    public int NumberOfPages { get; private set; }
+    public int PageNumber { get; private set; }
     public int TotalCountOfPages { get; private set; }
-    public PageViewModel( int pageNumber, int pageSize, int? count=0)
+    public PageViewModel( int pageNumber, int pageSize, int count )
     {
-        NumberOfPages = pageNumber;
-        TotalCountOfPages = (int)Math.Ceiling((double)(count! / (double)pageSize));
+        PageNumber = pageNumber;
+        TotalCountOfPages = (int)Math.Ceiling(count / (double)pageSize);
     }
     public bool HasPreviousPage
     {
         get
         {
-            return NumberOfPages > 1;
+            return PageNumber > 1;
         }
     }
     public bool HasNextPage
     {
         get
         {
-            return NumberOfPages < TotalCountOfPages;
+            return PageNumber < TotalCountOfPages;
         }
     }
 }
