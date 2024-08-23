@@ -7,11 +7,12 @@
 {
     <partial name="ProductSummary" model="p"/>
 }
-@if(Model.PageViewModel!.HasPreviousPage)
+@* @if(Model.PageViewModel!.HasPreviousPage)
 {
     <a asp-action="ProductList" asp-controller="Product" asp-route-page="@(Model.PageViewModel.PageNumber - 1)" class="btn btn-outline-dark"> Следующая <i class="glyphicon glyphicon-chevron-right"></i></a>
 }
 @if (Model.PageViewModel!.HasNextPage)
 {
     <a asp-action="ProductList" asp-controller="Product" asp-route-page="@(Model.PageViewModel.PageNumber + 1)" class="btn btn-outline-dark"> Предыдущая <i class="glyphicon glyphicon-chevron-left"></i></a>
-}
+} *@
+<page-link page-view-model="Model.PageViewModel" page-action="ProductList" page-controller="ProductController"></page-link>
