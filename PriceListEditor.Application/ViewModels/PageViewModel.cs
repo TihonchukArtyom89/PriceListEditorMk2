@@ -15,14 +15,14 @@ public class PageViewModel
     {
         get
         {
-            return PageNumber > 1;
+            return (PageNumber > 1);
         }
     }
     public bool HasNextPage
     {
         get
         {
-            return PageNumber < TotalCountOfPages;
+            return (PageNumber < TotalCountOfPages);
         }
     }
 }

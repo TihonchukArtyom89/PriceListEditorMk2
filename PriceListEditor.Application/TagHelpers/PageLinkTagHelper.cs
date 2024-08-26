@@ -19,7 +19,7 @@ public class PageLinkTagHelper : TagHelper
     [ViewContext]
     [HtmlAttributeNotBound]
     public ViewContext? ViewContext { get; set; }
-    public PageViewModel? PageViewModel { get; set; }
+    public PageViewModel? PageViewModel { get; set; } 
     public string? PageAction { get; set; }
     public string? PageController {  get; set; }
 
@@ -43,6 +43,7 @@ public class PageLinkTagHelper : TagHelper
             TagBuilder nextPage = CreateTag(PageViewModel.PageNumber + 1, urlHelper);
             tag.InnerHtml.AppendHtml(nextPage);
         }
+        output.Content.AppendHtml(tag);
     }
     TagBuilder CreateTag(int pageNumber, IUrlHelper urlHelper)
     {
@@ -54,7 +55,7 @@ public class PageLinkTagHelper : TagHelper
         }
         else
         {
-            pageLink.Attributes["href"] = urlHelper.Action(action: PageAction,values: new { page = pageNumber },controller:PageController);
+            pageLink.Attributes["href"] = urlHelper.Action(action: PageAction,values: new { page = pageNumber });
         }
         listItem.AddCssClass("page-item");
         pageLink.AddCssClass("page-link");
