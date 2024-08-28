@@ -5,24 +5,7 @@
 
 @foreach (Product p in Model.Products ?? Enumerable.Empty<Product>())
 {
-    <partial name="ProductSummary" model="p"/>
+    <partial name="ProductSummary" model="p" />
 }
-<div >
-    @if (Model.PageViewModel!.HasPreviousPage)
-    {
-        <a asp-action="ProductList" asp-controller="Product" asp-route-page="@(Model.PageViewModel.PageNumber - 1)" class="btn btn-outline-primary"> Предыдущая <i class="glyphicon glyphicon-chevron-right"></i></a>
-    }
-    else
-    {
-        <a class="btn btn-outline-secondary"> Предыдущая </a>
-    }
-    <page-link page-view-model="Model.PageViewModel" page-action="ProductList" page-controller="ProductController" ></page-link>
-    @if (Model.PageViewModel!.HasNextPage)
-    {
-        <a asp-action="ProductList" asp-controller="Product" asp-route-page="@(Model.PageViewModel.PageNumber + 1)" class="btn btn-outline-primary"> Следующая <i class="glyphicon glyphicon-chevron-left"></i></a>
-    }
-    else
-    {
-        <a class="btn btn-outline-secondary"> Следующая </a>
-    }
-</div>
+<page-link page-view-model="Model.PageViewModel" page-action="ProductList" page-controller="ProductController"></page-link>
+

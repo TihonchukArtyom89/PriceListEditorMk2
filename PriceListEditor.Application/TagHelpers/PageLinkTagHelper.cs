@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -26,30 +27,19 @@ public class PageLinkTagHelper : TagHelper
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
         IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext ?? new ViewContext());
-        output.TagName = "div";
-        //list of page links is unsorted - ul
-        TagBuilder tag = new TagBuilder("ul");
-        tag.AddCssClass("pagination");
+        output.TagName = "div";        
+        TagBuilder ulBuilder = new TagBuilder("ul");
+        ulBuilder.AddCssClass("pagination");
+        TagBuilder previousPage = CreatePreviousTag(PageViewModel!.PageNumber - 1, urlHelper, PageViewModel!.HasPreviousPage);
+        ulBuilder.InnerHtml.AppendHtml(previousPage);
         for (int i = 1; i <= PageViewModel!.TotalCountOfPages; i++)
-        {//hide some pages-make later
-            TagBuilder pageBuilder = CreateTag(i,urlHelper);
-            tag.InnerHtml.AppendHtml(pageBuilder);
-        }//add some more complex displaying of pagination on different pages
-        //old pagination
-        ////create three links on next,current and previous pages
-        //TagBuilder currentPage = CreateTag(PageViewModel!.PageNumber , urlHelper);//current
-        //if (PageViewModel.HasPreviousPage) //previous
-        //{
-        //    TagBuilder previousPage = CreateTag(PageViewModel.PageNumber - 1, urlHelper);
-        //    tag.InnerHtml.AppendHtml(previousPage);
-        //}
-        //tag.InnerHtml.AppendHtml(currentPage);
-        //if (PageViewModel.HasNextPage) //next
-        //{
-        //    TagBuilder nextPage = CreateTag(PageViewModel.PageNumber + 1, urlHelper);
-        //    tag.InnerHtml.AppendHtml(nextPage);
-        //}
-        output.Content.AppendHtml(tag);
+        {
+            TagBuilder pageBuilder = CreateTag(i, urlHelper);
+            ulBuilder.InnerHtml.AppendHtml(pageBuilder);
+        }
+        TagBuilder nextPage = CreateNextTag(PageViewModel.PageNumber + 1, urlHelper, PageViewModel.HasNextPage);
+        ulBuilder.InnerHtml.AppendHtml(nextPage);
+        output.Content.AppendHtml(ulBuilder);
     }
     TagBuilder CreateTag(int pageNumber, IUrlHelper urlHelper)
     {
@@ -66,6 +56,36 @@ public class PageLinkTagHelper : TagHelper
         listItem.AddCssClass("page-item");
         pageLink.AddCssClass("page-link");
         pageLink.InnerHtml.Append(pageNumber.ToString());
+        listItem.InnerHtml.AppendHtml(pageLink);
+        return listItem;
+    }
+    TagBuilder CreatePreviousTag(int pageNumber, IUrlHelper urlHelper,bool hasPreviousPage)
+    {
+        TagBuilder listItem = new TagBuilder("li");
+        TagBuilder pageLink = new TagBuilder("a");
+        if(hasPreviousPage)
+        {
+            pageLink.Attributes["href"] = urlHelper.Action(action: PageAction, values: new { page = pageNumber });
+            listItem.AddCssClass("active");
+        }
+        listItem.AddCssClass("page-item");
+        pageLink.AddCssClass("page-link");
+        pageLink.InnerHtml.Append("Предыдущая");
+        listItem.InnerHtml.AppendHtml(pageLink);
+        return listItem;
+    }
+    TagBuilder CreateNextTag(int pageNumber, IUrlHelper urlHelper, bool hasNextPage)
+    {
+        TagBuilder listItem = new TagBuilder("li");
+        TagBuilder pageLink = new TagBuilder("a");
+        if (hasNextPage)
+        {
+            pageLink.Attributes["href"] = urlHelper.Action(action: PageAction, values: new { page = pageNumber });
+            listItem.AddCssClass("active");
+        }
+        listItem.AddCssClass("page-item");
+        pageLink.AddCssClass("page-link");
+        pageLink.InnerHtml.Append("Следующая");
         listItem.InnerHtml.AppendHtml(pageLink);
         return listItem;
     }
