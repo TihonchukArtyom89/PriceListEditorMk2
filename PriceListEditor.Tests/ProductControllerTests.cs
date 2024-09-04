@@ -1,4 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using Moq;
+using PriceListEditor.Application.Controllers;
+using PriceListEditor.Application.Models;
 using PriceListEditor.Application.ViewModels;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Net.Sockets;
+using System.Reflection.Metadata;
+using System.Xml;
 
 namespace PriceListEditor.Tests;
 
@@ -8,22 +17,16 @@ public class ProductControllerTests
     public void Can_Use_Repository()
     {
         //Arrange
-        Mock<IProductRepository> mockRepository = new Mock<IProductRepository>();
-        //mockRepository.Setup(mr => mr.Products).Returns((new Product[]
-        //{
-        //    new Product{ProductID=1,ProductName="P1"},
-        //    new Product{ProductID=2,ProductName="P2"}
-        //}).AsQueryable<Product>());//for synchronous variat of ProductList method in ProductController
-        mockRepository.Setup(mr => mr.Products).Returns((new Product[]
+        Product[] productsTestData = new Product[]
         {
             new Product{ProductID=1,ProductName="P1"},
             new Product{ProductID=2,ProductName="P2"}
-        }).AsQueryable<Product>());//for asynchronous variat of ProductList method in ProductController
+        };
+        Mock<IProductRepository> mockRepository = new Mock<IProductRepository>();
+        mockRepository.Setup(mr => mr.Products).Returns(productsTestData.AsQueryable<Product>());
         ProductController productController = new ProductController(mockRepository.Object);
         //Act
-        //var resultProducts = (productController.ProductList()?.ViewData.Model as ProductListViewModel ?? new())?.Products?.ToArray() ?? Array.Empty<Product>();//for synchronous variat of ProductList method in ProductController
-        var resultProducts = (productController.ProductList()?.Result as ProductListViewModel ?? new())?.Products?.ToArray() ?? Array.Empty<Product>();//перерработать тест не проходитс€
-        //(productController.ProductList()?.ViewData.Model as ProductListViewModel ?? new())?.Products?.ToArray() ?? Array.Empty<Product>();
+        var resultProducts = (productController.ProductList()?.ViewData.Model as ProductListViewModel ?? new())?.Products?.ToArray() ?? Array.Empty<Product>();
         //Assert
         Assert.True(resultProducts.Length == 2);//Assert.Equal(2, products.Length);//одинаково
         Assert.Equal("P1", resultProducts[0].ProductName);

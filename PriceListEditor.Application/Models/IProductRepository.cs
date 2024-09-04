@@ -1,6 +1,4 @@
-﻿
-
-namespace PriceListEditor.Application.Models;
+﻿namespace PriceListEditor.Application.Models;
 
 public interface IProductRepository
 {
