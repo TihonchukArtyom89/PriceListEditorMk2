@@ -4,8 +4,8 @@ namespace PriceListEditor.Application.ViewModels;
 
 public class PageViewModel
 {
-    public int PageNumber { get; private set; }
-    public int TotalCountOfPages { get; private set; }
+    public int PageNumber { get; set; }
+    public int TotalCountOfPages { get; set; }
     public PageViewModel( int pageNumber, int pageSize, int count )
     {
         PageNumber = pageNumber;
