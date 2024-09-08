@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PriceListEditor.Tests;
 
@@ -43,15 +44,12 @@ public class PageLinkTagHelperTests
         //Act
         helper.Process(tagHelperContext, tagHelperOutput);
         //Assert
-        Assert.Equal(@"<ul class=""pagination""><li class=""active page-item""><a class=""page-link"" href=""/Product/ProductList?page=1"">Предыдущая</a></li>" +
+        string expectedHTML = @"<ul class=""pagination""><li class=""active page-item""><a class=""page-link"" href=""/Product/ProductList?page=1"">Предыдущая</a></li>" +
         @"<li class=""page-item""><a class=""page-link"">1</a></li>" +
         @"<li class=""active page-item""><a class=""page-link"" href=""/Product/ProductList?page= 2"">2</a></li>" +
         @"<li class=""page-item""><a class=""page-link"" href=""/Product/ProductList?page= 3"">3</a></li>" +
-        @"<li class=""active page-item""><a class=""page-link"" href=""/Product/ProductList?page=3"">Следующая</a></li></ul>", tagHelperOutput.Content.GetContent());
- //< ul class="pagination"><li class="active page-item"><a class="page-link" href="/Product/ProductList?page=1">Предыдущая</a></li>
- //       <li class="page-item"><a class="page-link" href="/Product/ProductList?page=1">1</a>
- //       </li><li class="active page-item"><a class="page-link">2</a></li>
- //       <li class="page-item"><a class="page-link" href="/Product/ProductList?page=3">3</a></li>
- //       <li class="active page-item"><a class="page-link" href="/Product/ProductList?page=3">Следующая</a></li></ul>
+        @"<li class=""active page-item""><a class=""page-link"" href=""/Product/ProductList?page=3"">Следующая</a></li></ul>";
+        string actualHTML = System.Net.WebUtility.HtmlDecode(tagHelperOutput.Content.GetContent());
+        Assert.Equal(expectedHTML, actualHTML);
     }
 }

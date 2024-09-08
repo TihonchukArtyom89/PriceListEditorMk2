@@ -71,6 +71,7 @@ public class PageLinkTagHelper : TagHelper
         listItem.AddCssClass("page-item");
         pageLink.AddCssClass("page-link");
         pageLink.InnerHtml.Append("Предыдущая");
+        //pageLink.InnerHtml.Append(" <- ");
         listItem.InnerHtml.AppendHtml(pageLink);
         return listItem;
     }
@@ -86,6 +87,7 @@ public class PageLinkTagHelper : TagHelper
         listItem.AddCssClass("page-item");
         pageLink.AddCssClass("page-link");
         pageLink.InnerHtml.Append("Следующая");
+        //pageLink.InnerHtml.Append(" -> ");
         listItem.InnerHtml.AppendHtml(pageLink);
         return listItem;
     }
