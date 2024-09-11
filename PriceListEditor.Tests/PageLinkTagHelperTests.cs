@@ -22,9 +22,9 @@ public class PageLinkTagHelperTests
         //Arrange
         var urlHelper = new Mock<IUrlHelper>();
         urlHelper.SetupSequence(x => x.Action(It.IsAny<UrlActionContext>()))
-            .Returns("/Product/ProductList?page=1")//здесь надо оставить прежние данные
-            .Returns("/Product/ProductList?page=1")//и разобраться над работой генерации ссылок на страницы
-            .Returns("/Product/ProductList?page=3")//в пагинации
+            .Returns("/Product/ProductList?page=1")
+            .Returns("/Product/ProductList?page=1")
+            .Returns("/Product/ProductList?page=3")
             .Returns("/Product/ProductList?page=3");
         var urlHelperFactory = new Mock<IUrlHelperFactory>();
         urlHelperFactory.Setup(f => f.GetUrlHelper(It.IsAny<ActionContext>())).Returns(urlHelper.Object);
