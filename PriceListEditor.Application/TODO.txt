@@ -4,7 +4,6 @@
 +add classes to data model of application for mapping with visual diagram of databases
 +make pagination for product list view
 +make tests for pagination for product list view
--improve url for different pages
--make filtration of products in product list combined with pagination
--create category selector for product list view
++improve url for different pages
+-make filtration (category selector) of products in product list combined with pagination in one page
 -add buttons with crud actions displaying on model popup on product list view
