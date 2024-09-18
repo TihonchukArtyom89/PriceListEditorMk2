@@ -9,7 +9,7 @@ public class PageViewModel
     public PageViewModel( int pageNumber, int pageSize, int count )
     {
         PageNumber = pageNumber;
-        TotalCountOfPages = (int)Math.Ceiling(count / (double)pageSize);
+        TotalCountOfPages = (int)Math.Ceiling((decimal)count / pageSize);// (int)Math.Ceiling((decimal)productsTestData.Count() / pageSize)
     }
     public bool HasPreviousPage
     {
