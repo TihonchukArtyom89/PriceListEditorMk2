@@ -5,6 +5,7 @@ using PriceListEditor.Application.Models;
 using PriceListEditor.Application.ViewModels;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
 using System.Net.Sockets;
 using System.Reflection.Metadata;
 using System.Xml;
@@ -48,9 +49,9 @@ public class ProductControllerTests
         };
         Mock<IProductRepository> mockRepository = new Mock<IProductRepository>();
         mockRepository.Setup(mr => mr.Products).Returns(productsTestData.AsQueryable<Product>());
-        ProductController productController = new ProductController(mockRepository.Object) 
+        ProductController productController = new ProductController(mockRepository.Object)
         {
-            pageSize=3
+            pageSize = 3
         };
         //Act
         Product[]? resultProducts = (productController.ProductList(null, 2)?.ViewData.Model as ProductListViewModel ?? new())?.Products?.ToArray() ?? Array.Empty<Product>();
@@ -79,16 +80,50 @@ public class ProductControllerTests
         mockRepository.Setup(mr => mr.Products).Returns(productsTestData.AsQueryable<Product>());
         ProductController productController = new ProductController(mockRepository.Object)
         {
-            pageSize = pageSize,            
+            pageSize = pageSize,
         };
         //Act
         ProductListViewModel result = productController.ProductList(null, currentPage)?.ViewData.Model as ProductListViewModel ?? new();
         //Assert
         PageViewModel actualPageViewModel = result.PageViewModel!;
-        PageViewModel expectedPageViewModel = new PageViewModel(pageNumber: currentPage,pageSize: pageSize, count: productsTestData.Count());
+        PageViewModel expectedPageViewModel = new PageViewModel(pageNumber: currentPage, pageSize: pageSize, count: productsTestData.Count());
         Assert.Equal(expectedPageViewModel.HasPreviousPage, actualPageViewModel.HasPreviousPage);
         Assert.Equal(expectedPageViewModel.HasNextPage, actualPageViewModel.HasNextPage);
         Assert.Equal(expectedPageViewModel.TotalCountOfPages, actualPageViewModel.TotalCountOfPages);
         Assert.Equal(expectedPageViewModel.PageNumber, actualPageViewModel.PageNumber);
+    }
+    [Fact]
+    public void Can_Filter_Products()
+    {
+        //Arrange
+        Mock<IProductRepository> mockRepository = new Mock<IProductRepository>();
+        Category[] categoriesTestData = new Category[]
+        {
+            new Category{CategoryID=1,CategoryName="C1"},
+            new Category{CategoryID=2,CategoryName="C1"},
+            new Category{CategoryID=3,CategoryName="C3"},
+        };
+        Product[] productsTestData = new Product[]
+        {
+            new Product{ProductID=1,ProductName="P1",CategoryID=1},
+            new Product{ProductID=2,ProductName="P2",CategoryID=2},
+            new Product{ProductID=3,ProductName="P3",CategoryID=2},
+            new Product{ProductID=4,ProductName="P4",CategoryID=1},
+            new Product{ProductID=5,ProductName="P5",CategoryID=3},
+            new Product{ProductID=6,ProductName="P6",CategoryID=1},
+            new Product{ProductID=7,ProductName="P7",CategoryID=3}
+        };
+        mockRepository.Setup(mr => mr.Products).Returns(productsTestData.AsQueryable<Product>());
+        mockRepository.Setup(mr => mr.Categories).Returns(categoriesTestData.AsQueryable<Category>());
+        ProductController productController = new ProductController(mockRepository.Object)
+        {
+            pageSize = 3,
+        };
+        //Act
+        Product[] result = ((productController.ProductList("C3", 1)?.ViewData.Model as ProductListViewModel ?? new()).Products ?? new Product[] { }).ToArray();
+        //Assert
+        Assert.Equal(2,result.Length);
+        Assert.True(result[0].ProductID==5 && result[0].ProductName == "P5" && result[0].CategoryID == 3);
+        Assert.True(result[1].ProductID == 7 && result[1].ProductName == "P7" && result[1].CategoryID == 3);
     }
 }
