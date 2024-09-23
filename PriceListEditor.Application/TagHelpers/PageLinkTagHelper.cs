@@ -23,6 +23,8 @@ public class PageLinkTagHelper : TagHelper
     public PageViewModel? PageViewModel { get; set; }
     public string? PageAction { get; set; }
     public string? PageController { get; set; }
+    [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
+    public Dictionary<string, object> PageUrlValues { get; set; } = new Dictionary<string, object>();
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
@@ -34,6 +36,7 @@ public class PageLinkTagHelper : TagHelper
         ulBuilder.InnerHtml.AppendHtml(previousPage);
         for (int i = 1; i <= PageViewModel!.TotalCountOfPages; i++)
         {
+            PageUrlValues["page"] = i;
             TagBuilder pageBuilder = CreateTag(i, urlHelper);
             ulBuilder.InnerHtml.AppendHtml(pageBuilder);
         }
@@ -41,6 +44,7 @@ public class PageLinkTagHelper : TagHelper
         ulBuilder.InnerHtml.AppendHtml(nextPage);
         output.Content.AppendHtml(ulBuilder);
     }
+    //CreateTag,CreatePreviousTag,CreateNextTag to one function
     TagBuilder CreateTag(int pageNumber, IUrlHelper urlHelper)
     {
         TagBuilder listItem = new TagBuilder("li");
@@ -51,7 +55,7 @@ public class PageLinkTagHelper : TagHelper
         }
         else
         {
-            pageLink.Attributes["href"] = urlHelper.Action(action: PageAction, values: new { page = pageNumber });
+            pageLink.Attributes["href"] = urlHelper.Action(action: PageAction, values: PageUrlValues);//new { page = pageNumber }
         }
         listItem.AddCssClass("page-item");
         pageLink.AddCssClass("page-link");
@@ -65,13 +69,12 @@ public class PageLinkTagHelper : TagHelper
         TagBuilder pageLink = new TagBuilder("a");
         if(hasPreviousPage)
         {
-            pageLink.Attributes["href"] = urlHelper.Action(action: PageAction, values: new { page = pageNumber });
+            pageLink.Attributes["href"] = urlHelper.Action(action: PageAction, values: PageUrlValues);
             listItem.AddCssClass("active");
         }
         listItem.AddCssClass("page-item");
         pageLink.AddCssClass("page-link");
         pageLink.InnerHtml.Append("Предыдущая");
-        //pageLink.InnerHtml.Append(" <- ");
         listItem.InnerHtml.AppendHtml(pageLink);
         return listItem;
     }
@@ -81,13 +84,12 @@ public class PageLinkTagHelper : TagHelper
         TagBuilder pageLink = new TagBuilder("a");
         if (hasNextPage)
         {
-            pageLink.Attributes["href"] = urlHelper.Action(action: PageAction, values: new { page = pageNumber });
+            pageLink.Attributes["href"] = urlHelper.Action(action: PageAction, values: PageUrlValues);
             listItem.AddCssClass("active");
         }
         listItem.AddCssClass("page-item");
         pageLink.AddCssClass("page-link");
         pageLink.InnerHtml.Append("Следующая");
-        //pageLink.InnerHtml.Append(" -> ");
         listItem.InnerHtml.AppendHtml(pageLink);
         return listItem;
     }

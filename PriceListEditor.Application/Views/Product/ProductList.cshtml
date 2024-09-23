@@ -1,5 +1,4 @@
-﻿@* @model IQueryable<PriceListEditor.Application.Models.Product> *@
-@using PriceListEditor.Application.ViewModels;
+﻿@using PriceListEditor.Application.ViewModels;
 @model ProductListViewModel
 <h4 class="m-1 pb-2"> Cписок продуктов </h4>
 
@@ -7,5 +6,5 @@
 {
     <partial name="ProductSummary" model="p" />
 }
-<page-link page-view-model="Model.PageViewModel" page-action="ProductList" page-controller="ProductController"></page-link>
+<page-link page-view-model="Model.PageViewModel" page-action="ProductList" page-controller="ProductController" page-url-category="@Model!.CurrentCategory!"></page-link>
 
