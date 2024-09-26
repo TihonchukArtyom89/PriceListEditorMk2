@@ -1,10 +1,15 @@
 ﻿@using PriceListEditor.Application.ViewModels;
 @model ProductListViewModel
+
+
 <h4 class="m-1 pb-2"> Cписок продуктов </h4>
-
-@foreach (Product p in Model.Products ?? Enumerable.Empty<Product>())
-{
-    <partial name="ProductSummary" model="p" />
-}
-<page-link page-view-model="Model.PageViewModel" page-action="ProductList" page-controller="ProductController" page-url-category="@Model!.CurrentCategory!"></page-link>
-
+<div class="col-5">
+    <vc:category-filter-menu />
+</div>
+<div class="col-7">
+    @foreach (Product p in Model.Products ?? Enumerable.Empty<Product>())
+    {
+        <partial name="ProductSummary" model="p" />
+    }
+    <page-link page-view-model="Model.PageViewModel" page-action="ProductList" page-controller="ProductController" page-url-category="@Model!.CurrentCategory!"></page-link>
+</div>
