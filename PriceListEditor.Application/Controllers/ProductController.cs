@@ -15,12 +15,12 @@ public class ProductController : Controller
     }
     public ViewResult ProductList(string? category, int page = 1)
     {
-        IQueryable<Product>? productSource = productRepository.Products; //source of products
-        int produtCount = productSource!.Count(); //total number of products
+        IQueryable<Product>? productSource = productRepository.Products;
         IQueryable<Category>? categorySource = productRepository.Categories;
         Category? selectedCategory = categorySource!.Where(c => category == null || c.CategoryName == category).FirstOrDefault() ?? new Category();
+        int productCount = category == null ? productSource!.Count() : (productRepository.Products ?? new List<Product>().AsQueryable()).Where(e => e.Category == selectedCategory).Count();
         List<Product> pageProducts = productSource!.Where(p => category == null || p.CategoryID == selectedCategory.CategoryID).Skip((page - 1) * pageSize).Take(pageSize).ToList();//list of products on a page
-        PageViewModel pageViewModel = new(page, pageSize, produtCount);
+        PageViewModel pageViewModel = new(page, pageSize, productCount);
         ProductListViewModel productListViewModel = new()
         {
             PageViewModel = pageViewModel,

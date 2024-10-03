@@ -7,3 +7,7 @@
 +improve url for different pages
 -make filtration (category selector) of products in product list combined with pagination in one page
 -add buttons with crud actions displaying on model popup on product list view
+
+make-on-next
+-fix work of previous button on pagination of product list
+-add unit tests of category filter
