@@ -1,9 +1,18 @@
 ﻿to-do list:
 
-+some simple styling views
-+add classes to data model of application for mapping with visual diagram of databases
-+make pagination for product list view
-+make tests for pagination for product list view
-+improve url for different pages
--make filtration (category selector) of products in product list combined with pagination in one page
+-styling views
+-add classes to data model of application for mapping with visual diagram of databases
+-make pagination for product list view
+-create category selector for product list view
 -add buttons with crud actions displaying on model popup on product list view
+
+make - today
+- change product controller to use category filter with name of category
+- add unit test Can_Filter
+- work with url scheme (on first sight is fine)
+
+
+make future
+- add category filter
+- change selecting category to dropdowng list
+- try to add search feature
