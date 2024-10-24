@@ -12,11 +12,11 @@ builder.Services.AddScoped<IProductRepository,EFProductRepository>();//create re
 var app = builder.Build();
 
 app.UseStaticFiles();//use static content from wwwroot folder
-//app.MapControllerRoute("pagination", "Product/ProductList/Page{page}", new { Controller = "Product", Action = "ProductList" });//changing url for method productlist of controller
-app.MapControllerRoute("catpage", "Products/{category}/Page{page:int}", new { Controller = "Product", Action = "ProductList" });//changing url for method productlist of controller
-app.MapControllerRoute("page", "Products/Page{page:int}", new { Controller = "Product", Action = "ProductList", page = 1 });//changing url for method productlist of controller
-app.MapControllerRoute("category", "{category}", new { Controller = "Product", Action = "ProductList", page = 1 });//changing url for method productlist of controller
-app.MapControllerRoute("pagination", "Products/Page{page}", new { Controller = "Product", Action = "ProductList", page = 1 });//changing url for method productlist of controller
+//app.MapControllerRoute("pagination", "Products/Page{productPage}", new { Controller = "Product", Action = "ProductList" });//change url scheme
+app.MapControllerRoute("catpage", "Products/{category}/Page{productPage:int}", new { Controller = "Product", Action = "ProductList" });//change url scheme
+app.MapControllerRoute("page", "Products/Page{productPage:int}", new { Controller = "Product", Action = "ProductList", productPage = 1 });//change url scheme
+app.MapControllerRoute("category", "Products/{category}", new { Controller = "Product", Action = "ProductList", productPage = 1 });//change url scheme
+app.MapControllerRoute("pagination", "Products/Page{productPage}", new { Controller = "Product", Action = "ProductList", productPage = 1 });//change url scheme
 app.MapDefaultControllerRoute();//registers MVC framework as source of endpoint by using default convention of mapping requests to classes and methods
 SeedData.EnsurePopulated(app);//fill db with sample data values//dotnet ef database drop --force --context PredpriyatieDBContext
 app.Run();

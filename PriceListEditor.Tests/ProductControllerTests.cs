@@ -1,14 +1,4 @@
-using Microsoft.EntityFrameworkCore;
-using Moq;
-using PriceListEditor.Application.Controllers;
-using PriceListEditor.Application.Models;
 using PriceListEditor.Application.ViewModels;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net.Sockets;
-using System.Reflection.Metadata;
-using System.Xml;
 
 namespace PriceListEditor.Tests;
 
@@ -18,113 +8,95 @@ public class ProductControllerTests
     public void Can_Use_Repository()
     {
         //Arrange
-        Product[] productsTestData = new Product[]
-        {
-            new Product{ProductID=1,ProductName="P1"},
-            new Product{ProductID=2,ProductName="P2"}
-        };
         Mock<IProductRepository> mockRepository = new Mock<IProductRepository>();
-        mockRepository.Setup(mr => mr.Products).Returns(productsTestData.AsQueryable<Product>());
+        mockRepository.Setup(mr => mr.Products).Returns((new Product[]
+        {
+            new Product{ProductID = 1, ProductName = "P1", CategoryID = 1},
+            new Product{ProductID = 2, ProductName = "P2", CategoryID = 2}
+        }).AsQueryable<Product>());
         ProductController productController = new ProductController(mockRepository.Object);
         //Act
-        Product[]? resultProducts = (productController.ProductList(null)?.ViewData.Model as ProductListViewModel ?? new())?.Products?.ToArray() ?? Array.Empty<Product>();
+        ProductsListViewModel result = productController.ProductList(null)?.ViewData.Model as ProductsListViewModel ?? new();
         //Assert
-        Assert.True(resultProducts.Length == 2);
-        Assert.Equal("P1", resultProducts[0].ProductName);
-        Assert.Equal(1, resultProducts[0].ProductID);
-        Assert.Equal("P2", resultProducts[1].ProductName);
-        Assert.Equal(2, resultProducts[1].ProductID);
+        Product[] products = result.Products.ToArray();
+        Assert.Equal(2, products.Length);
+        Assert.Equal("P1", products[0].ProductName);
+        Assert.Equal(1, products[0].ProductID);
+        Assert.Equal("P2", products[1].ProductName);
+        Assert.Equal(2, products[1].ProductID);
     }
     [Fact]
     public void Can_Paginate()
     {
         //Arrange
-        Product[] productsTestData = new Product[]
-        {
-            new Product{ProductID=1,ProductName="P1"},
-            new Product{ProductID=2,ProductName="P2"},
-            new Product{ProductID=3,ProductName="P3"},
-            new Product{ProductID=4,ProductName="P4"},
-            new Product{ProductID=5,ProductName="P5"}
-        };
         Mock<IProductRepository> mockRepository = new Mock<IProductRepository>();
-        mockRepository.Setup(mr => mr.Products).Returns(productsTestData.AsQueryable<Product>());
-        ProductController productController = new ProductController(mockRepository.Object)
+        mockRepository.Setup(mr => mr.Products).Returns((new Product[]
         {
-            pageSize = 3
-        };
+            new Product{ProductID = 1, ProductName = "P1", CategoryID = 1},
+            new Product{ProductID = 2, ProductName = "P2", CategoryID = 2},
+            new Product{ProductID = 3, ProductName = "P3", CategoryID = 1},
+            new Product{ProductID = 4, ProductName = "P4", CategoryID = 2},
+            new Product{ProductID = 5, ProductName = "P5", CategoryID = 2}
+        }).AsQueryable<Product>());
+        ProductController productController = new ProductController(mockRepository.Object) { PageSize = 3 };
         //Act
-        Product[]? resultProducts = (productController.ProductList(null, 2)?.ViewData.Model as ProductListViewModel ?? new())?.Products?.ToArray() ?? Array.Empty<Product>();
+        ProductsListViewModel result = productController.ProductList(null, 2)?.ViewData.Model as ProductsListViewModel ?? new();
         //Assert
-        Assert.True(resultProducts.Length == 2);
-        Assert.Equal("P4", resultProducts[0].ProductName);
-        Assert.Equal("P5", resultProducts[1].ProductName);
+        Product[] p = result.Products.ToArray();
+        Assert.True(2 == p.Length);
+        Assert.Equal("P4", p[0].ProductName);
+        Assert.Equal(4, p[0].ProductID);
+        Assert.Equal("P5", p[1].ProductName);
+        Assert.Equal(5, p[1].ProductID);
     }
     [Fact]
     public void Can_Send_Pagination_View_Model()
     {
         //Arrange
-        Product[] productsTestData = new Product[]
-        {
-            new Product{ProductID=1,ProductName="P1"},
-            new Product{ProductID=2,ProductName="P2"},
-            new Product{ProductID=3,ProductName="P3"},
-            new Product{ProductID=4,ProductName="P4"},
-            new Product{ProductID=5,ProductName="P5"},
-            new Product{ProductID=6,ProductName="P6"},
-            new Product{ProductID=7,ProductName="P7"}
-        };
-        int currentPage = 2;
-        int pageSize = 3;
         Mock<IProductRepository> mockRepository = new Mock<IProductRepository>();
-        mockRepository.Setup(mr => mr.Products).Returns(productsTestData.AsQueryable<Product>());
-        ProductController productController = new ProductController(mockRepository.Object)
+        mockRepository.Setup(mr => mr.Products).Returns((new Product[]
         {
-            pageSize = pageSize,
-        };
+            new Product{ProductID = 1, ProductName = "P1", CategoryID = 1},
+            new Product{ProductID = 2, ProductName = "P2", CategoryID = 2},
+            new Product{ProductID = 3, ProductName = "P3", CategoryID = 1},
+            new Product{ProductID = 4, ProductName = "P4", CategoryID = 2},
+            new Product{ProductID = 5, ProductName = "P5", CategoryID = 2}
+        }).AsQueryable<Product>());
+        ProductController productController = new ProductController(mockRepository.Object) { PageSize = 3 };
         //Act
-        ProductListViewModel result = productController.ProductList(null, currentPage)?.ViewData.Model as ProductListViewModel ?? new();
+        ProductsListViewModel result = productController.ProductList(null, 2)?.ViewData.Model as ProductsListViewModel ?? new();
         //Assert
-        PageViewModel actualPageViewModel = result.PageViewModel!;
-        PageViewModel expectedPageViewModel = new PageViewModel(pageNumber: currentPage, pageSize: pageSize, count: productsTestData.Count());
-        Assert.Equal(expectedPageViewModel.HasPreviousPage, actualPageViewModel.HasPreviousPage);
-        Assert.Equal(expectedPageViewModel.HasNextPage, actualPageViewModel.HasNextPage);
-        Assert.Equal(expectedPageViewModel.TotalCountOfPages, actualPageViewModel.TotalCountOfPages);
-        Assert.Equal(expectedPageViewModel.PageNumber, actualPageViewModel.PageNumber);
+        PagingInfo pagingInfo = result.PagingInfo;
+        Assert.Equal(2, pagingInfo.CurrenPage);
+        Assert.Equal(2, pagingInfo.TotalPages);
+        Assert.Equal(3, pagingInfo.ItemsPerPage);
+        Assert.Equal(5, pagingInfo.TotalItems);
     }
     [Fact]
     public void Can_Filter_Products()
     {
         //Arrange
         Mock<IProductRepository> mockRepository = new Mock<IProductRepository>();
-        Category[] categoriesTestData = new Category[]
+        mockRepository.Setup(mr => mr.Products).Returns((new Product[]
         {
-            new Category{CategoryID=1,CategoryName="C1"},
-            new Category{CategoryID=2,CategoryName="C1"},
-            new Category{CategoryID=3,CategoryName="C3"},
-        };
-        Product[] productsTestData = new Product[]
+            new Product{ProductID = 1, ProductName = "P1", CategoryID = 1},
+            new Product{ProductID = 2, ProductName = "P2", CategoryID = 2},
+            new Product{ProductID = 3, ProductName = "P3", CategoryID = 1},
+            new Product{ProductID = 4, ProductName = "P4", CategoryID = 2},
+            new Product{ProductID = 5, ProductName = "P5", CategoryID = 2}
+        }).AsQueryable<Product>());
+        mockRepository.Setup(mr => mr.Categories).Returns((new Category[]
         {
-            new Product{ProductID=1,ProductName="P1",CategoryID=1},
-            new Product{ProductID=2,ProductName="P2",CategoryID=2},
-            new Product{ProductID=3,ProductName="P3",CategoryID=2},
-            new Product{ProductID=4,ProductName="P4",CategoryID=1},
-            new Product{ProductID=5,ProductName="P5",CategoryID=3},
-            new Product{ProductID=6,ProductName="P6",CategoryID=1},
-            new Product{ProductID=7,ProductName="P7",CategoryID=3}
-        };
-        mockRepository.Setup(mr => mr.Products).Returns(productsTestData.AsQueryable<Product>());
-        mockRepository.Setup(mr => mr.Categories).Returns(categoriesTestData.AsQueryable<Category>());
-        ProductController productController = new ProductController(mockRepository.Object)
-        {
-            pageSize = 3,
-        };
+            new Category{CategoryID = 1, CategoryName = "C1" },
+            new Category{CategoryID = 2, CategoryName = "C2" }
+        }).AsQueryable<Category>());
+        ProductController productController = new ProductController(mockRepository.Object) { PageSize = 3 };
         //Act
-        Product[] result = ((productController.ProductList("C3", 1)?.ViewData.Model as ProductListViewModel ?? new()).Products ?? new Product[] { }).ToArray();
+        Product[] result = (productController.ProductList("C1", 1)?.ViewData.Model as ProductsListViewModel ?? new()).Products.ToArray();
         //Assert
-        Assert.Equal(2,result.Length);
-        Assert.True(result[0].ProductID==5 && result[0].ProductName == "P5" && result[0].CategoryID == 3);
-        Assert.True(result[1].ProductID == 7 && result[1].ProductName == "P7" && result[1].CategoryID == 3);
+        Assert.Equal(2, result.Length);
+        Assert.True(result[0].ProductName == "P1" && result[0].ProductID == 1);
+        Assert.True(result[1].ProductName == "P3" && result[1].ProductID == 3);
     }
     [Fact]
     public void Can_Correct_Page_Count()
