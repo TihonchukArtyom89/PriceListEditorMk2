@@ -1,16 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Razor.Runtime.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using PriceListEditor.Application.TagHelpers;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using PriceListEditor.Application.Infrastructure;
 using PriceListEditor.Application.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace PriceListEditor.Tests;
 
@@ -20,42 +19,28 @@ public class PageLinkTagHelperTests
     public void Can_Generate_Page_Links()
     {
         //Arrange
-        var urlHelper = new Mock<IUrlHelper>();
-        urlHelper.SetupSequence(x => x.Action(It.IsAny<UrlActionContext>()))
-            .Returns("/Product/ProductList?page=1")
-            .Returns("/Product/ProductList?page=1")
-            .Returns("/Product/ProductList?page=3")
-            .Returns("/Product/ProductList?page=3");
-        var urlHelperFactory = new Mock<IUrlHelperFactory>();
-        urlHelperFactory.Setup(f => f.GetUrlHelper(It.IsAny<ActionContext>())).Returns(urlHelper.Object);
-        var viewContext = new Mock<ViewContext>();
-        int pageNumber = 2;
-        int pageSize = 2;
-        int count = 6;
-        int TotalCountOfPages = (int)Math.Ceiling(count / (double)pageSize);
-        PageLinkTagHelper helper = new PageLinkTagHelper(urlHelperFactory.Object)
+        Mock<IUrlHelper> mockUrlHelper = new Mock<IUrlHelper>();
+        mockUrlHelper.SetupSequence(e => e.Action(It.IsAny<UrlActionContext>())).Returns("Test/Page1").Returns("Test/Page1").Returns("Test/Page2").Returns("Test/Page3").Returns("Test/Page3");
+        Mock<IUrlHelperFactory> mockUrlHelperFactory = new Mock<IUrlHelperFactory>();
+        mockUrlHelperFactory.Setup(e=>e.GetUrlHelper(It.IsAny<ActionContext>())).Returns(mockUrlHelper.Object);
+        Mock<ViewContext> mockViewContext = new Mock<ViewContext>();
+        PageLinkTagHelper pageLinkTagHelper = new PageLinkTagHelper(mockUrlHelperFactory.Object) 
         {
-            PageViewModel = new PageViewModel(pageNumber: pageNumber, pageSize: pageSize, count: count)
+            PageModel = new PagingInfo() 
             {
-                PageNumber = pageNumber,
-                TotalCountOfPages = (int)Math.Ceiling(count / (double)pageSize)
+                CurrenPage = 2,
+                TotalItems = 28,
+                ItemsPerPage = 10
             },
-            ViewContext = viewContext.Object,
-            PageAction = "ProductList",
-            PageController = "ProductController"
+            ViewContext = mockViewContext.Object,
+            PageAction = "Test"
         };
-        TagHelperContext tagHelperContext = new TagHelperContext(new TagHelperAttributeList(), new Dictionary<object, object>(), "");
-        var content = new Mock<TagHelperContent>();
-        TagHelperOutput tagHelperOutput = new TagHelperOutput("div", new TagHelperAttributeList(), (cache, encoder) => Task.FromResult(content.Object));
+        TagHelperContext tagHelperContext = new TagHelperContext(new TagHelperAttributeList(),new Dictionary<object,object>(),"");
+        Mock<TagHelperContent> mockTagHelperContent = new Mock<TagHelperContent>();  
+        TagHelperOutput tagHelperOutput = new TagHelperOutput("div",new TagHelperAttributeList(),(cache,encoder)=> Task.FromResult(mockTagHelperContent.Object));
         //Act
-        helper.Process(tagHelperContext, tagHelperOutput);
+        pageLinkTagHelper.Process(tagHelperContext, tagHelperOutput);
         //Assert
-        string expectedHTML = @"<ul class=""pagination""><li class=""active page-item""><a class=""page-link"" href=""/Product/ProductList?page=1"">Предыдущая</a></li>" +
-                                @"<li class=""page-item""><a class=""page-link"" href=""/Product/ProductList?page=1"">1</a></li>" +
-                                @"<li class=""active page-item""><a class=""page-link"">2</a></li>" +
-                                @"<li class=""page-item""><a class=""page-link"" href=""/Product/ProductList?page=3"">3</a></li>" +
-                                @"<li class=""active page-item""><a class=""page-link"" href=""/Product/ProductList?page=3"">Следующая</a></li></ul>";
-        string actualHTML = System.Net.WebUtility.HtmlDecode(tagHelperOutput.Content.GetContent());
-        Assert.Equal(expectedHTML, actualHTML);
+        Assert.Equal(@"<a class="" "" href=""Test/Page1""> &lt;- </a><a href=""Test/Page1"">1</a><a href=""Test/Page2"">2</a><a href=""Test/Page3"">3</a><a class="" "" href=""Test/Page3""> -&gt; </a>", tagHelperOutput.Content.GetContent());
     }
 }
