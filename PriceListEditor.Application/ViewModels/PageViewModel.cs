@@ -1,8 +1,8 @@
 ﻿
 namespace PriceListEditor.Application.ViewModels;
 
-public class PagingInfo
-{
+public class PageViewModel
+{//PageViewModel
     public int TotalItems { get; set; }
     public int ItemsPerPage { get; set; }
     public int CurrenPage { get; set; }

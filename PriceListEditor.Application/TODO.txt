@@ -7,18 +7,19 @@
 -add buttons with crud actions displaying on model popup on product list view
 
 make - today
-- add category filter view
-- fix unit test for category filtering
-- rework for using two tables (products and categories) for category filtering feature
-- add unit for correct show selected category in category filter
-- add highlightning of selected category
-- add correct page count when specific category of product is selected
+- clean code for comments
+- some renaming
+- make work unit test about product count
+- refactor page link tag helper class
+- hide arrows of next and previous pages when current page is first or last
 
 
 make future
-- hide arrows of next and previous pages when count of product pages is equal one
+- make unit testing of page link tag helper for different current pages and page sizes
 - hide pagination when count of product pages is equal zero
+- hide arrows of next and previous pages when count of product pages is equal one 
+- hide pagination when count of product pages is equal zero
+- add complex pagination with three pages(current previous net), first and last pages,  
 - add special product card where is saying that the products of this category is no availiable
-- change selecting category to dropdowng list(maybe not changing)
-- try to add search feature
-- add dropdown list with choices of page size
+- add dropdowng list with choices of page size(like a category filter)
+- try to add search feature(maybe like a category filter)

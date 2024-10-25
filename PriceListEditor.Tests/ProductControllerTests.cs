@@ -64,13 +64,13 @@ public class ProductControllerTests
         }).AsQueryable<Product>());
         ProductController productController = new ProductController(mockRepository.Object) { PageSize = 3 };
         //Act
-        ProductsListViewModel result = productController.ProductList(null, 2)?.ViewData.Model as ProductsListViewModel ?? new();
+        ProductsListViewModel productsListViewModel = productController.ProductList(null, 2)?.ViewData.Model as ProductsListViewModel ?? new();
         //Assert
-        PagingInfo pagingInfo = result.PagingInfo;
-        Assert.Equal(2, pagingInfo.CurrenPage);
-        Assert.Equal(2, pagingInfo.TotalPages);
-        Assert.Equal(3, pagingInfo.ItemsPerPage);
-        Assert.Equal(5, pagingInfo.TotalItems);
+        PageViewModel pageViewModel  = productsListViewModel.PageViewModel;
+        Assert.Equal(2, pageViewModel.CurrenPage);
+        Assert.Equal(2, pageViewModel.TotalPages);
+        Assert.Equal(3, pageViewModel.ItemsPerPage);
+        Assert.Equal(5, pageViewModel.TotalItems);
     }
     [Fact]
     public void Can_Filter_Products()
@@ -99,7 +99,7 @@ public class ProductControllerTests
         Assert.True(result[1].ProductName == "P3" && result[1].ProductID == 3);
     }
     [Fact]
-    public void Can_Correct_Page_Count()
+    public void Can_Get_Product_Count()
     {
         //Arrange
         Mock<IProductRepository> mockRepository = new Mock<IProductRepository>();
@@ -117,17 +117,17 @@ public class ProductControllerTests
             new Category{CategoryID = 2, CategoryName = "C2" },
             new Category{CategoryID = 3, CategoryName = "C3" },
         }).AsQueryable<Category>());
-        ProductController productController = new ProductController(mockRepository.Object) { PageSize = 2 };
+        ProductController productController = new ProductController(mockRepository.Object) { PageSize = 3 };
         Func<ViewResult, ProductsListViewModel?> GetModel = result => result?.ViewData?.Model as ProductsListViewModel;
         //Act
-        int? countC1 = GetModel(productController.ProductList("C1"))?.PagingInfo.TotalItems;
-        int? countC2 = GetModel(productController.ProductList("C2"))?.PagingInfo.TotalItems;
-        int? countC3 = GetModel(productController.ProductList("C3"))?.PagingInfo.TotalItems;
-        int? countAll = GetModel(productController.ProductList(null))?.PagingInfo.TotalItems;
+        int? countC1 = GetModel(productController.ProductList("C1"))?.PageViewModel.TotalItems;
+        int? countC2 = GetModel(productController.ProductList("C2"))?.PageViewModel.TotalItems;
+        int? countC3 = GetModel(productController.ProductList("C3"))?.PageViewModel.TotalItems;
+        int? countAll = GetModel(productController.ProductList(null))?.PageViewModel.TotalItems;
         //Assert
-        Assert.Equal(1, countC1);
-        Assert.Equal(2, countC2);
+        Assert.Equal(2, countC1);
+        Assert.Equal(3, countC2);
         Assert.Equal(0, countC3);
-        Assert.Equal(3, countAll);
+        Assert.Equal(5, countAll);
     }
 }

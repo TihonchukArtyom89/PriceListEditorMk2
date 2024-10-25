@@ -21,7 +21,7 @@ public class ProductController : Controller
             .Products
             .Where(p => CurrentCategory == null || p.CategoryID == CurrentCategory.CategoryID)
             .OrderBy(p => p.ProductID).Skip((productPage - 1) * PageSize).Take(PageSize),
-            PagingInfo = new PagingInfo
+            PageViewModel = new PageViewModel
             {
                 CurrenPage = productPage,
                 ItemsPerPage = PageSize,
