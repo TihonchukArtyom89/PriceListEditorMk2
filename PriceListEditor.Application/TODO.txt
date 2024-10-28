@@ -7,19 +7,12 @@
 -add buttons with crud actions displaying on model popup on product list view
 
 make - today
-- clean code for comments
-- some renaming
-- make work unit test about product count
-- refactor page link tag helper class
-- hide arrows of next and previous pages when current page is first or last
-
-
-make future
-- make unit testing of page link tag helper for different current pages and page sizes
 - hide pagination when count of product pages is equal zero
 - hide arrows of next and previous pages when count of product pages is equal one 
-- hide pagination when count of product pages is equal zero
-- add complex pagination with three pages(current previous net), first and last pages,  
 - add special product card where is saying that the products of this category is no availiable
+
+make future
 - add dropdowng list with choices of page size(like a category filter)
+- make unit testing of page link tag helper for different current pages and page sizes
+- add complex pagination with three pages(current previous net), first and last pages
 - try to add search feature(maybe like a category filter)
