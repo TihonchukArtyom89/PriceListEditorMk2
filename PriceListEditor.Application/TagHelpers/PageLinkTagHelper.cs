@@ -34,7 +34,6 @@ public class PageLinkTagHelper : TagHelper
         if (ViewContext != null && PageModel != null)
         {
             IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
-
             string css1 = "", css2 = "";
             TagBuilder pagination = new TagBuilder("div");
             TagBuilder pageButton = new TagBuilder("a");

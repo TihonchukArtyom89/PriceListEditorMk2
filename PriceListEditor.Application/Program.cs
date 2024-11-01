@@ -13,10 +13,14 @@ var app = builder.Build();
 
 app.UseStaticFiles();//use static content from wwwroot folder
 //app.MapControllerRoute("pagination", "Products/Page{productPage}", new { Controller = "Product", Action = "ProductList" });//change url scheme
-app.MapControllerRoute("catpage", "Products/{category}/Page{productPage:int}", new { Controller = "Product", Action = "ProductList" });//change url scheme
-app.MapControllerRoute("page", "Products/Page{productPage:int}", new { Controller = "Product", Action = "ProductList", productPage = 1 });//change url scheme
+//app.MapControllerRoute("catpage", "Products/{category}/Page{productPage:int}", new { Controller = "Product", Action = "ProductList" });//change url scheme
+//app.MapControllerRoute("page", "Products/Page{productPage:int}", new { Controller = "Product", Action = "ProductList", productPage = 1 });//change url scheme
+//app.MapControllerRoute("category", "Products/{category}", new { Controller = "Product", Action = "ProductList", productPage = 1 });//change url scheme
+//app.MapControllerRoute("pagination", "Products/Page{productPage}", new { Controller = "Product", Action = "ProductList", productPage = 1 });//change url scheme
+app.MapControllerRoute("catpage", "Products/{category}/Page{productPage:int}/Size{pageSize:int}", new { Controller = "Product", Action = "ProductList" });//change url scheme
+app.MapControllerRoute("page", "Products/Page{productPage:int}/Size{pageSize:int}", new { Controller = "Product", Action = "ProductList", productPage = 1 });//change url scheme
 app.MapControllerRoute("category", "Products/{category}", new { Controller = "Product", Action = "ProductList", productPage = 1 });//change url scheme
-app.MapControllerRoute("pagination", "Products/Page{productPage}", new { Controller = "Product", Action = "ProductList", productPage = 1 });//change url scheme
+app.MapControllerRoute("pagination", "Products/Page{productPage}/Size{pageSize}", new { Controller = "Product", Action = "ProductList", productPage = 1 });//change url scheme
 app.MapDefaultControllerRoute();//registers MVC framework as source of endpoint by using default convention of mapping requests to classes and methods
 SeedData.EnsurePopulated(app);//fill db with sample data values//dotnet ef database drop --force --context PredpriyatieDBContext
 app.Run();

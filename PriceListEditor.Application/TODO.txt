@@ -1,18 +1,21 @@
 ﻿to-do list:
 
--styling views
--add classes to data model of application for mapping with visual diagram of databases
--make pagination for product list view
--create category selector for product list view
++styling views
++add classes to data model of application for mapping with visual diagram of databases
++make pagination for product list view
++create category selector for product list view
+-add a few features to product list 
 -add buttons with crud actions displaying on model popup on product list view
+-make another in another list some features without page reloading
 
-make - today
-- hide pagination when count of product pages is equal zero
-- hide arrows of next and previous pages when count of product pages is equal one 
-- add special product card where is saying that the products of this category is no availiable
+make at now
+-make page size in product controller on product list as a parameter of function
+-make visual part of selecting page sizes
 
-make future
-- add dropdowng list with choices of page size(like a category filter)
-- make unit testing of page link tag helper for different current pages and page sizes
-- add complex pagination with three pages(current previous net), first and last pages
-- try to add search feature(maybe like a category filter)
+make in future
+- save the selected page size
+- pass parametr to product list action in product controller
+- refine url scheme with page sizes
+- add dropdowng list with choices of page size(try to do it like a category feature, but look on metainit on paging,sorting and filtering)
+- try to add search feature(see on metainit) 
+- try to add sorting feature(see on metainit) 
