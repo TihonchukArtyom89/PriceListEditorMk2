@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<string>
 <div class ="d-grid gap-2">
-    <a class="btn btn-outline-secondary" asp-action="ProductList" asp-controller="Product" asp-route-category="">Все продукты</a>
+    <a class="btn btn-outline-secondary" asp-action="ProductList" asp-controller="Product" asp-route-category="" asp-route-pageSize="@ViewBag.SelectedPageSize">Все продукты</a>
     @foreach (string category in Model ?? Enumerable.Empty<string>())
     {
-        <a class="btn @(category == ViewBag.SelectedCategory ? "btn-primary":"btn-outline-secondary")" asp-action="ProductList" asp-controller="Product" asp-route-category="@category" asp-route-productPage="1">@category</a>
+        <a class="btn @(category == ViewBag.SelectedCategory ? "btn-primary":"btn-outline-secondary")" asp-action="ProductList" asp-controller="Product" asp-route-category="@category" asp-route-productPage="1" asp-route-pageSize="@(ViewBag.SelectedPageSize)">@category</a>
     }
 </div>

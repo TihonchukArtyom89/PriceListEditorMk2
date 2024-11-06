@@ -38,7 +38,7 @@ public class ProductController : Controller
                 : productRepository.Products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count()
             },
             CurrentCategory = (CurrentCategory ?? new Category { CategoryName = null ?? "" }).CategoryName,
-            PageSize = pageSize,
+            
         });
     }
 }

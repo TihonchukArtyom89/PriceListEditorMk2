@@ -1,6 +1,34 @@
 ﻿@model IEnumerable<SelectListItem>
 <div class="d-grip gap-2">
     <b>Выберите размер страницы</b>
-    <select id="pageSizeSelector" asp-items="@Model">      
-    </select>
+    <select id="pageSizeSelector" onchange="getSelectedItem()">
+        @foreach (SelectListItem listItem in Model ?? Enumerable.Empty<SelectListItem>())
+        {
+            @if (listItem.Selected)
+            {
+                ViewBag.SelectedPageSize = listItem.Value;
+                <option value="@listItem.Value" selected>@listItem.Value</option>
+            }
+            else
+            {
+                <option value="@listItem.Value"><a href="http://localhost:5000/Products/Page1/Size" + @(listItem.Value)>@listItem.Value</a></option>
+                @* <option value="@listItem.Value">@listItem.Value</option> *@
+            }
+      }
+   </select>
 </div>
+<script>
+    function getCurrentURL () 
+    {
+        return window.location.href
+    }
+    function getSelectedItem()
+    {
+        // var url = getCurrentUrl();
+        // window.location.href();
+        // document.querySelector('#pageSizeSelector').value//selected page size
+        // alert(url);
+        // alert("1");
+        alert(document.querySelector('#pageSizeSelector').value);
+    }
+</script>
