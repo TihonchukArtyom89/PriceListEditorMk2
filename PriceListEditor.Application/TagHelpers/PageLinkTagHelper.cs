@@ -64,7 +64,7 @@ public class PageLinkTagHelper : TagHelper
     {
         TagBuilder pageLink = new TagBuilder("a");
         PageUrlValues["productPage"] = pageNumber;
-        PageUrlValues["pageSize"] = (PageModel ?? new()).ItemsPerPage;
+        PageUrlValues["pageSize"] = (PageModel ?? new()).PageSize;
         pageLink.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
         pageLink.AddCssClass(css1);
         pageLink.AddCssClass(css2);

@@ -1,34 +1,38 @@
 ﻿@model IEnumerable<SelectListItem>
-<div class="d-grip gap-2">
-    <b>Выберите размер страницы</b>
-    <select id="pageSizeSelector" onchange="getSelectedItem()">
-        @foreach (SelectListItem listItem in Model ?? Enumerable.Empty<SelectListItem>())
-        {
-            @if (listItem.Selected)
+
+<form method="post" id="formPageSizeSelector" onchange="SelectedItemChanged()" asp-controller="Product" asp-action="ProductList">
+    <div class="d-grip gap-2">
+        <b>Выберите размер страницы</b>
+        <select id="pageSizeSelector">
+            @foreach (SelectListItem listItem in Model ?? Enumerable.Empty<SelectListItem>())
             {
-                ViewBag.SelectedPageSize = listItem.Value;
-                <option value="@listItem.Value" selected>@listItem.Value</option>
+                @if (listItem.Selected)
+                {
+                    ViewBag.SelectedPageSize = listItem.Value;
+                    <option value="@listItem.Value" selected>@listItem.Value</option>
+                }
+                else
+                {
+                    @* <option value="@listItem.Value"><a href="http://localhost:5000/Products/Page1/Size" + @(listItem.Value)>@listItem.Value</a></option> *@
+                    <option value="@listItem.Value">@listItem.Value</option>
+                }
             }
-            else
-            {
-                <option value="@listItem.Value"><a href="http://localhost:5000/Products/Page1/Size" + @(listItem.Value)>@listItem.Value</a></option>
-                @* <option value="@listItem.Value">@listItem.Value</option> *@
-            }
-      }
-   </select>
-</div>
-<script>
-    function getCurrentURL () 
+        </select>
+    </div>
+</form>
+<script type="text/javascript">
+    function getCurrentURL() 
     {
         return window.location.href
     }
-    function getSelectedItem()
+    function SelectedItemChanged()
     {
         // var url = getCurrentUrl();
         // window.location.href();
         // document.querySelector('#pageSizeSelector').value//selected page size
         // alert(url);
-        // alert("1");
-        alert(document.querySelector('#pageSizeSelector').value);
+        alert(getCurrentURL());
+        // alert(document.querySelector('#pageSizeSelector').value);
+        document.formPageSizeSelector.submit();
     }
 </script>

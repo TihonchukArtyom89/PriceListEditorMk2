@@ -30,7 +30,7 @@ public class PageLinkTagHelperTests
             {
                 CurrenPage = 2,
                 TotalItems = 28,
-                ItemsPerPage = 10
+                PageSize = 10
             },
             ViewContext = mockViewContext.Object,
             PageAction = "Test"

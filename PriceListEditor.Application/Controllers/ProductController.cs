@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using PriceListEditor.Application.Models;
 using PriceListEditor.Application.ViewModels;
 
@@ -32,13 +33,13 @@ public class ProductController : Controller
             PageViewModel = new PageViewModel
             {
                 CurrenPage = productPage,
-                ItemsPerPage = pageSize,
+                PageSize = pageSize,
                 TotalItems = category == null ?
                 productRepository.Products.Count()
                 : productRepository.Products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count()
             },
             CurrentCategory = (CurrentCategory ?? new Category { CategoryName = null ?? "" }).CategoryName,
-            
+
         });
     }
 }

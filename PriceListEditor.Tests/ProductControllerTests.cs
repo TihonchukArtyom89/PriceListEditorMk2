@@ -69,7 +69,7 @@ public class ProductControllerTests
         PageViewModel pageViewModel = productsListViewModel.PageViewModel;
         Assert.Equal(2, pageViewModel.CurrenPage);
         Assert.Equal(2, pageViewModel.TotalPages);
-        Assert.Equal(3, pageViewModel.ItemsPerPage);
+        Assert.Equal(3, pageViewModel.PageSize);
         Assert.Equal(5, pageViewModel.TotalItems);
     }
     [Fact]
@@ -123,7 +123,7 @@ public class ProductControllerTests
         int? countC1 = GetModel(productController.ProductList("C1", 1, 3))?.PageViewModel.TotalItems;
         int? countC2 = GetModel(productController.ProductList("C2", 1, 3))?.PageViewModel.TotalItems;
         int? countC3 = GetModel(productController.ProductList("C3", 1, 3))?.PageViewModel.TotalItems;
-        int? countAll = GetModel(productController.ProductList(null))?.PageViewModel.TotalItems;
+        int? countAll = GetModel(productController.ProductList(null, 1, 3))?.PageViewModel.TotalItems;
         //Assert
         Assert.Equal(2, countC1);
         Assert.Equal(3, countC2);
@@ -152,7 +152,7 @@ public class ProductControllerTests
         ProductController productController = new ProductController(mockRepository.Object);
         Func<ViewResult, ProductsListViewModel?> GetModel = result => result?.ViewData?.Model as ProductsListViewModel;
         //Act
-        int? pageCount = (productController.ProductList("C1", 1, 3)?.ViewData.Model as ProductsListViewModel ?? new()).PageSize ?? 0;
+        int? pageCount = (productController.ProductList("C1", 1, 3)?.ViewData.Model as ProductsListViewModel ?? new()).PageViewModel.PageSize;
         //Assert
         Assert.Equal(3, pageCount);
     }
