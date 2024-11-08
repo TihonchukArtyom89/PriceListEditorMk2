@@ -9,13 +9,14 @@
 -make another in another list some features without page reloading
 
 make at now
--some renaming
+- clean code in view for pagesize selector
+- pass parameter to product list action in product controller
+- refine url scheme with page sizes
 
 make in future
-- work on onchange event in view for pagesize selector... generate link and go on them
-- clean code in view for pagesize selector
-- pass parameter to product list action in product controller - make analog of pagelinktaghelper
-- refine url scheme with page sizes
+- save selected page size after change page size
+- save selected page after changing page size if this page is existing, else go on page 1
+- make unit tests on changing page size like a category filter
 - add dropdowng list with choices of page size(try to do it like a category feature, but look on metainit on paging,sorting and filtering)
 - try to add search feature(see on metainit) 
 - try to add sorting feature(see on metainit) 

@@ -6,33 +6,26 @@
         <select id="pageSizeSelector">
             @foreach (SelectListItem listItem in Model ?? Enumerable.Empty<SelectListItem>())
             {
-                @if (listItem.Selected)
-                {
-                    ViewBag.SelectedPageSize = listItem.Value;
-                    <option value="@listItem.Value" selected>@listItem.Value</option>
-                }
-                else
-                {
-                    @* <option value="@listItem.Value"><a href="http://localhost:5000/Products/Page1/Size" + @(listItem.Value)>@listItem.Value</a></option> *@
-                    <option value="@listItem.Value">@listItem.Value</option>
-                }
+                <option value="@listItem.Value">@listItem.Value</option>
             }
         </select>
     </div>
 </form>
-<script type="text/javascript">
-    function getCurrentURL() 
+
+<script>
+    function SelectedItemChanged() 
     {
-        return window.location.href
-    }
-    function SelectedItemChanged()
-    {
-        // var url = getCurrentUrl();
-        // window.location.href();
-        // document.querySelector('#pageSizeSelector').value//selected page size
-        // alert(url);
-        alert(getCurrentURL());
-        // alert(document.querySelector('#pageSizeSelector').value);
-        document.formPageSizeSelector.submit();
+        var oldUrl = new URL(window.location.href);
+        var newUrl = new URL(oldUrl.protocol + oldUrl.host);
+        if (oldUrl.pathname.includes("Size"))
+        {
+            var oldSize = oldUrl.pathname.slice(oldUrl.pathname.indexOf("Size")+4, oldUrl.pathname.length);             
+            newUrl.pathname = oldUrl.pathname.replace("Size" + oldSize, "Size" + document.querySelector('#pageSizeSelector').value);
+        }
+        else
+        {
+            newUrl.pathname = "/Page1/Size1"
+        }
+        window.location.href = newUrl;
     }
 </script>
