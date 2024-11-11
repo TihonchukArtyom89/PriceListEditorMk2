@@ -4,7 +4,7 @@
     @foreach (string category in Model ?? Enumerable.Empty<string>())
     {
         @* <a class="btn @(category == ViewBag.SelectedCategory ? "btn-primary":"btn-outline-secondary")" asp-action="ProductList" asp-controller="Product" asp-route-category="@category" asp-route-productPage="1" asp-route-pageSize="@(ViewBag.SelectedPageSize)">@category</a> *@
-        <a class="btn @(category == ViewBag.SelectedCategory ? "btn-primary":"btn-outline-secondary")" asp-action="ProductList" asp-controller="Product" asp-route-category="@category" asp-route-productPage="1" asp-route-pageSize="1">@category</a>
+        <a class="btn @(category == ViewBag.SelectedCategory ? "btn-primary":"btn-outline-secondary")" asp-action="ProductList" asp-controller="Product" asp-route-category="@category" asp-route-productPage="1" asp-route-pageSize="@ViewBag.SelectedPageSize">@category</a>
 
     }
 </div>

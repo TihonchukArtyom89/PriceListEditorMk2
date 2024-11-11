@@ -35,8 +35,8 @@ public class ProductController : Controller
                 CurrenPage = productPage,
                 PageSize = pageSize,
                 TotalItems = category == null ?
-                productRepository.Products.Count()
-                : productRepository.Products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count()
+                productRepository.Products.Count() : productRepository.Products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count(),
+                CurrentAction = "Products"
             },
             CurrentCategory = (CurrentCategory ?? new Category { CategoryName = null ?? "" }).CategoryName,
 

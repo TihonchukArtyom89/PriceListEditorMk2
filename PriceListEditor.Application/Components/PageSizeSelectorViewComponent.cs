@@ -1,27 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using PriceListEditor.Application.ViewModels;
 
 namespace PriceListEditor.Application.Components;
 
 public class PageSizeSelectorViewComponent : ViewComponent
 {
-    public IViewComponentResult Invoke()
+    public IViewComponentResult Invoke(ProductsListViewModel productsList)
     {
-        int[] pageSizes = new int[] { 1,2,3,5,10};
-        ViewBag.PageSizes = pageSizes;
-        ViewBag.SelectedPageSize = pageSizes[0];
-        List<SelectListItem> selectListItems = new();
-        foreach (int pageSize in pageSizes)
-        {
-            if(pageSize == ViewBag.SelectedPageSize)
-            {
-                selectListItems.Add(new SelectListItem(pageSize.ToString(),pageSize.ToString(), true));
-            }
-            else
-            {
-                selectListItems.Add(new SelectListItem(pageSize.ToString(), pageSize.ToString()));
-            }
-        }
-        return View(selectListItems);
+        ViewBag.SelectedPageSize = productsList.PageViewModel.PageSize;
+        ViewBag.PageAction = productsList.PageViewModel.CurrentAction;
+        return View(productsList);
     }
 }

@@ -2,5 +2,4 @@
 В конце концов делится на страницы заданного размера.
 Фильтрация->Поиск->Сортировка->Размеры страниц->Пагинация
 Попробовать впихнуть селектор размера страниц в PageLinkTagHelper
-https://www.c-sharpcorner.com/blogs/handle-dropdown-selected-index-change-event-in-c-sharp-asp-net-mvc2
-https://www.c-sharpcorner.com/blogs/drop-down-list-selected-index-changed-event-in-mvc
+https://habr.com/ru/articles/510742/

@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PriceListEditor.Application.Models;
 
@@ -12,11 +11,6 @@ builder.Services.AddScoped<IProductRepository,EFProductRepository>();//create re
 var app = builder.Build();
 
 app.UseStaticFiles();//use static content from wwwroot folder
-//app.MapControllerRoute("pagination", "Products/Page{productPage}", new { Controller = "Product", Action = "ProductList" });//change url scheme
-//app.MapControllerRoute("catpage", "Products/{category}/Page{productPage:int}", new { Controller = "Product", Action = "ProductList" });//change url scheme
-//app.MapControllerRoute("page", "Products/Page{productPage:int}", new { Controller = "Product", Action = "ProductList", productPage = 1 });//change url scheme
-//app.MapControllerRoute("category", "Products/{category}", new { Controller = "Product", Action = "ProductList", productPage = 1 });//change url scheme
-//app.MapControllerRoute("pagination", "Products/Page{productPage}", new { Controller = "Product", Action = "ProductList", productPage = 1 });//change url scheme
 app.MapControllerRoute("catpage", "Products/{category}/Page{productPage:int}/Size{pageSize:int}", new { Controller = "Product", Action = "ProductList" });//change url scheme
 app.MapControllerRoute("page", "Products/Page{productPage:int}/Size{pageSize:int}", new { Controller = "Product", Action = "ProductList", productPage = 1 });//change url scheme
 app.MapControllerRoute("category", "Products/{category}", new { Controller = "Product", Action = "ProductList", productPage = 1 });//change url scheme
