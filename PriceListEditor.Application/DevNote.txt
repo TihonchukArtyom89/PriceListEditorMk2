@@ -2,4 +2,6 @@
 В конце концов делится на страницы заданного размера.
 Фильтрация->Поиск->Сортировка->Размеры страниц->Пагинация
 Попробовать впихнуть селектор размера страниц в PageLinkTagHelper
+Полезные страницы
 https://habr.com/ru/articles/510742/
+https://www.c-sharpcorner.com/article/passing-data-from-asp-net-mvc-to-javascript-a-guide-to-using-viewbag-and-viewda/?ysclid=m3h6s8o8f7284310540

@@ -17,7 +17,8 @@ public class ProductController : Controller
     {
         ViewBag.SelectedPageSize = pageSize;
         ViewBag.SelectedCategory = category;
-       Category? CurrentCategory = category == null ? null : productRepository.Categories.Where(e => e.CategoryName == category).FirstOrDefault();
+        ViewBag.SelectedPage = productPage;
+        Category? CurrentCategory = category == null ? null : productRepository.Categories.Where(e => e.CategoryName == category).FirstOrDefault();
         IEnumerable<Product> products = productRepository.Products.Where(p => CurrentCategory == null || p.CategoryID == CurrentCategory.CategoryID).OrderBy(p => p.ProductID).Skip((productPage - 1) * pageSize).Take(pageSize);
         products = products.Count() != 0 ? products :
             products.Append(
@@ -29,7 +30,7 @@ public class ProductController : Controller
                     ProductDescription = "Продуктов категории " + (CurrentCategory ?? new Category() { CategoryName = "Категория не указана" }).CategoryName + " не имеется!",
                     ProductPrice = 0.00M,
                 });
-        return View(new ProductsListViewModel
+        ProductsListViewModel viewModel = new ProductsListViewModel
         {
             Products = products,
             PageViewModel = new PageViewModel
@@ -41,6 +42,8 @@ public class ProductController : Controller
                 Pseudonym = "Products"
             },
             CurrentCategory = (CurrentCategory ?? new Category { CategoryName = null ?? "" }).CategoryName,
-        });
+            IsEmpty = (products.FirstOrDefault() ?? new Product { ProductName = "Нет в наличии!" }).ProductName == "Нет в наличии!" ? true : false
+        };
+        return View(viewModel);
     }
 }
