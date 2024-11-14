@@ -1,6 +1,6 @@
-﻿@model ProductsListViewModel
+﻿@model BaseListViewModel
 
-<form method="post" id="formPageSizeSelector" onchange="SelectedItemChanged()" asp-controller="Product" asp-action="ProductList">
+<form method="post" id=@("form"+@Model.PageViewModel.Pseudonym+"PageSizeSelector") onchange="SelectedItemChanged(this)" asp-controller="Product" asp-action="ProductList">
     <div class="d-grip gap-2">
         <b>Выберите размер страницы</b>
         <select id="pageSizeSelector">
@@ -20,7 +20,7 @@
 </form>
 
 <script>
-    function SelectedItemChanged() {
+    function SelectedItemChanged(object) {
         var oldUrl = new URL(window.location.href);
         var newUrl = new URL(oldUrl.protocol + "//" + oldUrl.host);
         if (oldUrl.pathname.includes("Size")) {
@@ -28,24 +28,9 @@
             newUrl.pathname = oldUrl.pathname.replace("Size" + oldSize, "Size" + document.querySelector('#pageSizeSelector').value);
         }
         else {
-            // var action = @Model.PageViewModel.CurrentAction;
-            // alert(action);
-            // if (action == "Products") {
-            //     newUrl = oldUrl.host + "/Products/Page1/Size" + document.querySelector('#pageSizeSelector').value;
-            // }
-            // else {
-            //     newUrl = oldUrl;
-            // }
-            // console.log(@Model.PageViewModel.CurrentAction);
-            // alert(oldUrl.protocol + oldUrl.host + @ViewBag.UrlPart + "/Page1/Size" + document.querySelector('#pageSizeSelector').value + "<-new url");
-            // console.log(oldUrl.protocol + oldUrl.host + @ViewBag.UrlPart + "/Page1/Size" + document.querySelector('#pageSizeSelector').value + "<-new url");
-            // newUrl = oldUrl.host + "/" + @ViewBag.UrlPart + "/Page1/Size" + document.querySelector('#pageSizeSelector').value;
-            // console.log(newUrl +" all");
-            // newUrl = oldUrl;
-            newUrl += "/Products/Page1/Size" + document.querySelector('#pageSizeSelector').value;
-            // newUrl.searchParams.set('category') = "";
-            // newUrl.searchParams.set('productPage') = 1;
-            // newUrl.searchParams.set('pageSize') = document.querySelector('#pageSizeSelector').value;
+            var pseudonym = object.id.replace("form", "");
+            pseudonym = pseudonym.replace("PageSizeSelector", "");
+            newUrl += pseudonym+"/Page1/Size" + document.querySelector('#pageSizeSelector').value;
         }
         window.location.href = newUrl;
     }

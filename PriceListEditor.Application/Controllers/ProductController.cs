@@ -15,7 +15,9 @@ public class ProductController : Controller
     }
     public ViewResult ProductList(string? category, int productPage = 1, int pageSize = 1)
     {
-        Category? CurrentCategory = category == null ? null : productRepository.Categories.Where(e => e.CategoryName == category).FirstOrDefault();
+        ViewBag.SelectedPageSize = pageSize;
+        ViewBag.SelectedCategory = category;
+       Category? CurrentCategory = category == null ? null : productRepository.Categories.Where(e => e.CategoryName == category).FirstOrDefault();
         IEnumerable<Product> products = productRepository.Products.Where(p => CurrentCategory == null || p.CategoryID == CurrentCategory.CategoryID).OrderBy(p => p.ProductID).Skip((productPage - 1) * pageSize).Take(pageSize);
         products = products.Count() != 0 ? products :
             products.Append(
@@ -36,10 +38,9 @@ public class ProductController : Controller
                 PageSize = pageSize,
                 TotalItems = category == null ?
                 productRepository.Products.Count() : productRepository.Products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count(),
-                CurrentAction = "Products"
+                Pseudonym = "Products"
             },
             CurrentCategory = (CurrentCategory ?? new Category { CategoryName = null ?? "" }).CategoryName,
-
         });
     }
 }

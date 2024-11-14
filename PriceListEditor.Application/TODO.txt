@@ -9,12 +9,12 @@
 -make another in another list some features without page reloading
 
 make at now
-- rework page size selector for using productsListViewModel
-- save selected page size after change page size
-- save selected page size after change product category
+- fix change size when after go on product list
+- rework view component for page size selector for using any class inherited by BaseListViewModel which return a list of some entities
+- rework links of category buttons after first redirecting to page of product list
 
 make in future
-- fix change size when after go on product list
+- make dissappearing vc of pagesize selectig when product count is 0
 - save selected page after changing page size if this page is existing, else go on page 1
 - make unit tests on changing page size like a category filter
 - add dropdowng list with choices of page size(try to do it like a category feature, but look on metainit on paging,sorting and filtering)

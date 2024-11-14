@@ -1,6 +1,5 @@
 ﻿@model ProductsListViewModel
 
-
 <div id="categories" class="col-1">
     <vc:category-filter />
 </div>
@@ -10,8 +9,7 @@
     {
         <partial name="ProductSummary" model="p" />
     }
-
-    <vc:page-size-selector products-list="@Model" />
+    <vc:page-size-selector list-view-model="@Model" />
     <div page-model="@Model?.PageViewModel" page-action="ProductList" page-class-enabled="true" page-class="btn" page-class-normal="btn-outline-dark"
          page-class-selected="btn-primary" page-class-arrow="btn-secondary" page-url-category="@Model?.CurrentCategory!" page-url-pageSize="@Model?.PageViewModel.PageSize ?? 1" class="btn-group pull-right m-1">
     </div>

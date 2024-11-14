@@ -6,10 +6,9 @@ namespace PriceListEditor.Application.Components;
 
 public class PageSizeSelectorViewComponent : ViewComponent
 {
-    public IViewComponentResult Invoke(ProductsListViewModel productsList)
+    public IViewComponentResult Invoke(BaseListViewModel listViewModel)
     {
-        ViewBag.SelectedPageSize = productsList.PageViewModel.PageSize;
-        ViewBag.PageAction = productsList.PageViewModel.CurrentAction;
-        return View(productsList);
+        ViewBag.SelectedPageSize = listViewModel.PageViewModel.PageSize;
+        return View(listViewModel);
     }
 }
