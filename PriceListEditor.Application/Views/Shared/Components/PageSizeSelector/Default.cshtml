@@ -1,26 +1,26 @@
 ﻿@model BaseListViewModel
+@* @{
+    int pageNumber = ViewBag.IsEmpty == true ? 1 : ViewBag.SelectedPage;
+} *@
 
-@if (!Model.IsEmpty)
-{
-    <form method="post" id=@("form"+@Model.PageViewModel.Pseudonym+"PageSizeSelector") onchange="SelectedItemChanged(this)" asp-controller="Product" asp-action="ProductList">
-        <div class="d-grip gap-2">
-            <b>Выберите размер страницы</b>
-            <select id="pageSizeSelector">
-                @foreach (int pageNumber in Model.PageSizes)
+<form method="post" id=@("form"+@Model.PageViewModel.Pseudonym+"PageSizeSelector") onchange="SelectedItemChanged(this)" asp-controller="Product" asp-action="ProductList">
+    <div class="d-grip gap-2">
+        <b>Выберите размер страницы</b>
+        <select id="pageSizeSelector">
+            @foreach (int pageSize in Model.PageSizes)
+            {
+                @if (pageSize == Model.PageViewModel.PageSize)
                 {
-                    @if (pageNumber == Model.PageViewModel.PageSize)
-                    {
-                        <option value="@pageNumber" selected>@pageNumber</option>
-                    }
-                    else
-                    {
-                        <option value="@pageNumber">@pageNumber</option>
-                    }
+                    <option value="@pageSize" selected>@pageSize</option>
                 }
-            </select>
-        </div>
-    </form>
-}
+                else
+                {
+                    <option value="@pageSize">@pageSize</option>
+                }
+            }
+        </select>
+    </div>
+</form>
 
 <script>
     function SelectedItemChanged(object) {
@@ -28,14 +28,7 @@
         var newUrl = new URL(oldUrl.protocol + "//" + oldUrl.host);
         if (oldUrl.pathname.includes("Size")) {
             var oldSize = oldUrl.pathname.slice(oldUrl.pathname.indexOf("Size") + 4, oldUrl.pathname.length);
-            // var oldPageNumber = oldUrl.pathname.slice(oldUrl.pathname.indexOf("Page") + 4, oldUrl.pathname.indexOf("/Size"));
-            // var pageNumber = 1;
-            // if ('@Model.PageViewModel.TotalPages' > '@ViewBag.SelectedPage') {
-            //     pageNumber = '@ViewBag.SelectedPage'
-            // }
             newUrl.pathname = oldUrl.pathname.replace("Size" + oldSize, "Size" + document.querySelector('#pageSizeSelector').value);
-            // newUrl.pathname = newUrl.pathname.replace("Page" + '@ViewBag.SelectedPage', "Page" + pageNumber);
-            // newUrl.pathname = newUrl.pathname.replace("Page" + oldPageNumber, "Page" + pageNumber);
         }
         else {
             newUrl += '@Model.PageViewModel.Pseudonym' + "/Page1/Size" + document.querySelector('#pageSizeSelector').value;

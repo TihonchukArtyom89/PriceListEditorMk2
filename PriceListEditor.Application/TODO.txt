@@ -9,13 +9,11 @@
 -make another in another list some features without page reloading
 
 make at now
-- save number of page when change specific category on all products
-- make dissappearing vc of pagesize selectig when product count is 0
-- rework script on page size selector view with new way transfer data between model and js script
+- hide pagination when page is not existing(when you redirect from old page on bigger list to shorter list)
 
 make in future
-- hide pagination when page is not existing(when you redirect from old page on bigger list to shorter list)
-- save selected page after changing page size if this page is existing, else go on page 1(when you redirect from old page on bigger list to shorter list try to do it in another place)
+- delete isempty properities
+- save selected page after changing page size if this page is existing, else go on page 1(work  with viewbag productcount and model properities current page - maybe it help)
 - make unit tests on changing page size like a category filter
 - add dropdowng list with choices of page size(try to do it like a category feature, but look on metainit on paging,sorting and filtering)
 - try to add search feature(see on metainit) 

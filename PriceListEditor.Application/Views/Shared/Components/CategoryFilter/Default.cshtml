@@ -1,8 +1,17 @@
 ﻿@model IEnumerable<string>
+@{
+    int pageNumber = ViewBag.IsEmpty == true ? 1 : ViewBag.SelectedPage;
+}
 <div class ="d-grid gap-2">
-    <a class="btn btn-outline-secondary" asp-action="ProductList" asp-controller="Product" asp-route-category="" asp-route-productPage="@ViewBag.SelectedPage" asp-route-pageSize="@ViewBag.SelectedPageSize" onclick="fff()">Все продукты</a>
+    <a class="btn btn-outline-secondary" asp-action="ProductList" asp-controller="Product" asp-route-category="" asp-route-productPage="@pageNumber" asp-route-pageSize="@ViewBag.SelectedPageSize" onclick="SelectCategory()">Все продукты</a>
     @foreach (string category in Model ?? Enumerable.Empty<string>())
     {
-        <a class="btn @(category == ViewBag.SelectedCategory ? "btn-primary":"btn-outline-secondary")" asp-action="ProductList" asp-controller="Product" asp-route-category="@category" asp-route-productPage="@ViewBag.SelectedPage" asp-route-pageSize="@ViewBag.SelectedPageSize" onclick="fff()">@category</a>
+        <a class="btn @(category == ViewBag.SelectedCategory ? "btn-primary":"btn-outline-secondary")" asp-action="ProductList" asp-controller="Product" asp-route-category="@category" asp-route-productPage="@pageNumber" asp-route-pageSize="@ViewBag.SelectedPageSize" onclick="SelectCategory()">@category</a>
     }
 </div> 
+@* <script>
+    function SelectCategory()
+    {
+        alert('@pageNumber');
+    }
+</script> *@

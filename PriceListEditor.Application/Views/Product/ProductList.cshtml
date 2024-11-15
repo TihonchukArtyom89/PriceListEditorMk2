@@ -1,7 +1,12 @@
 ﻿@model ProductsListViewModel
-
+@{
+    if (ViewBag.ProductCount == 0)
+    {
+        Model.PageViewModel.CurrenPage = 1;
+    }
+}
 <div id="categories" class="col-1">
-    <vc:category-filter />
+    <vc:category-filter products-list-view-model="@Model" />
 </div>
 <div class="col-11">
     <h4 class="m-1 pb-2"> Cписок продуктов </h4>
@@ -9,8 +14,29 @@
     {
         <partial name="ProductSummary" model="p" />
     }
-    <vc:page-size-selector list-view-model="@Model" />
-    <div page-model="@Model?.PageViewModel" page-action="ProductList" page-class-enabled="true" page-class="btn" page-class-normal="btn-outline-dark"
-         page-class-selected="btn-primary" page-class-arrow="btn-secondary" page-url-category="@Model?.CurrentCategory!" page-url-pageSize="@Model?.PageViewModel.PageSize ?? 1" class="btn-group pull-right m-1">
-    </div>
+    @if (ViewBag.ProductCount > 0)
+    {
+        <vc:page-size-selector list-view-model="@Model" />
+        <div page-model="@Model?.PageViewModel" page-action="ProductList" page-class-enabled="true" page-class="btn" page-class-normal="btn-outline-dark"
+             page-class-selected="btn-primary" page-class-arrow="btn-secondary" page-url-category="@Model?.CurrentCategory!" page-url-pageSize="@Model?.PageViewModel.PageSize ?? 1" class="btn-group pull-right m-1">
+        </div>
+    }
 </div>
+<script>
+    window.onloadstart = OnStart();
+    function OnStart() {
+        // var productCount = '@ViewBag.ProductCount';
+        // if (productCount == 0) 
+        // {
+        //     var oldUrl = new URL(window.location.href);
+        //     var newUrl = new URL(oldUrl.protocol + "//" + oldUrl.host);
+        //     if (oldUrl.pathname.includes("Size")) {
+        //         newUrl.pathname = oldUrl.pathname.replace("Page" + '@Model?.PageViewModel.CurrenPage', "Page" + 1);
+        //     }
+        //     else {
+        //         newUrl += '@Model?.PageViewModel.Pseudonym' + "/Page1/Size" + document.querySelector('#pageSizeSelector').value;
+        //     }
+        //     window.location.href = newUrl;
+        // }
+    }
+</script>
