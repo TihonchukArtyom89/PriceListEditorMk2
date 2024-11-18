@@ -1,7 +1,4 @@
 ﻿@model BaseListViewModel
-@* @{
-    int pageNumber = ViewBag.IsEmpty == true ? 1 : ViewBag.SelectedPage;
-} *@
 
 <form method="post" id=@("form"+@Model.PageViewModel.Pseudonym+"PageSizeSelector") onchange="SelectedItemChanged(this)" asp-controller="Product" asp-action="ProductList">
     <div class="d-grip gap-2">

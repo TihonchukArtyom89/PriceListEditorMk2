@@ -9,11 +9,10 @@
 -make another in another list some features without page reloading
 
 make at now
-- hide pagination when page is not existing(when you redirect from old page on bigger list to shorter list)
+- delete IsEmpty properities
 
 make in future
-- delete isempty properities
-- save selected page after changing page size if this page is existing, else go on page 1(work  with viewbag productcount and model properities current page - maybe it help)
+- save selected page after changing page size if this page is existing, else go on page 1(work in category filter with dictionary in model)
 - make unit tests on changing page size like a category filter
 - add dropdowng list with choices of page size(try to do it like a category feature, but look on metainit on paging,sorting and filtering)
 - try to add search feature(see on metainit) 

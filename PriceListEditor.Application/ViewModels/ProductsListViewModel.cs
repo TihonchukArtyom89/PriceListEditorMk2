@@ -8,7 +8,6 @@ public class ProductsListViewModel : BaseListViewModel
     {
         PageViewModel = new() { Pseudonym = "Products" };
         PageSizes = new int[] { 1, 2, 3, 5, 10 };
-        IsEmpty = true;
     }
     public IEnumerable<Product> Products { get; set; } = Enumerable.Empty<Product>();
     public string? CurrentCategory { get; set; }
