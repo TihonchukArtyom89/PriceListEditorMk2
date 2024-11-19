@@ -17,17 +17,3 @@
         </div>
     }
 </div>
-<script>
-    document.onload = start();
-    function start()
-    {
-        var productCount = '@ViewBag.ProductCount';
-        if(productCount == 0)
-        {
-            var url = new Url(window.location.href);
-            alert(url.protocol + "//" + url.host+"/@Model.PageViewModel.Pseudonym/Page1/Size/@Model.PageViewModel.PageSize");
-            // window.location.href = window.location.href ;
-        }
-        alert("product count: @ViewBag.ProductCount\nselected page: @ViewBag.SelectedPage");
-    }
-</script>

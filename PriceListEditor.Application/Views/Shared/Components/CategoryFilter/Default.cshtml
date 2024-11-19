@@ -1,4 +1,4 @@
-﻿@* @model IEnumerable<string>
+﻿@model IEnumerable<string>
 
 <div class ="d-grid gap-2">
     <a class="btn btn-outline-secondary" asp-action="ProductList" asp-controller="Product" asp-route-category="" asp-route-productPage="@(ViewBag.ProductCount == 0 ? 1 : ViewBag.SelectedPage)" asp-route-pageSize="@ViewBag.SelectedPageSize" onclick="SelectCategory()">Все продукты</a>
@@ -6,22 +6,5 @@
     {
         <a class="btn @(category == ViewBag.SelectedCategory ? "btn-primary":"btn-outline-secondary")" asp-action="ProductList" asp-controller="Product" asp-route-category="@category" asp-route-productPage="@(ViewBag.ProductCount == 0 ? 1 : ViewBag.SelectedPage)" asp-route-pageSize="@ViewBag.SelectedPageSize">@category</a>
     }
-</div>  *@
+</div> 
 
-
-
-
-
-@model Dictionary<string, string>
-
-<div class ="d-grid gap-2">
-    <a class="btn btn-outline-secondary" asp-action="ProductList" asp-controller="Product" asp-route-category="" asp-route-productPage="@((int)Model.Values.FirstOrDefault() < ViewBag.SelectedPage ? 1 : ViewBag.SelectedPage)" asp-route-pageSize="@ViewBag.SelectedPageSize">@Model.Values.FirstOrDefault()</a>
-    @foreach (KeyValuePair<string,string> pnn in Model)
-    {
-        <a class="btn @(pnn.Key == ViewBag.SelectedCategory ? "btn-primary":"btn-outline-secondary")" asp-action="ProductList" asp-controller="Product" asp-route-category="@pnn.Key" asp-route-productPage="@((int)pnn.Value < ViewBag.SelectedPage ? 1 : ViewBag.SelectedPage)" asp-route-pageSize="@ViewBag.SelectedPageSize">@pnn.Key</a>
-    }
-</div>
-@* 
-сделать в блоке кода пересчёт товара на странице ... сколько страниц товара занимает
-добавить ссылку для всех продуктов
-добавть цикличное добавление ссылок *@ 
