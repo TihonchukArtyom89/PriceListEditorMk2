@@ -9,11 +9,15 @@
 -make another in another list some features without page reloading
 
 make at now
-- make save selected page after changing page size if this page is existing, else go on page 1
+- fix not working old unit tests
+- make unit test on getting page size on all products
+- make unit test on getting page size on product with specific category
+- make unit test on redirecting page with saving number of pages
+- make unit test on redirecting page with bigger amount of pages
 
 make in future
-- fix not working old unit tests
-- make unit tests on changing page size like a category filter
-- add dropdowng list with choices of page size(try to do it like a category feature, but look on metainit on paging,sorting and filtering)
+- make unit test for generating a set of page sizes(try some other approach)
+- make unit test for getting a selected page size
+- add dropdowng list with choices of page size
 - try to add search feature(see on metainit) 
 - try to add sorting feature(see on metainit) 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using PriceListEditor.Application.Models;
 using PriceListEditor.Application.ViewModels;
 
 namespace PriceListEditor.Application.Components;

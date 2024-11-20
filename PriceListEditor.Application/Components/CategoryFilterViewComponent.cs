@@ -13,8 +13,9 @@ public class CategoryFilterViewComponent : ViewComponent
         this.productRepository = productRepository;
     }
 
-    public IViewComponentResult Invoke(ProductsListViewModel productsListViewModel)
+    public IViewComponentResult Invoke()
     {
+        ViewBag.SelectedCategory = RouteData?.Values["category"];
         return View(productRepository.Categories.Select(e => e.CategoryName).OrderBy(e => e));
     }
 }

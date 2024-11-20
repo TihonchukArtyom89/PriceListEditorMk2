@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using PriceListEditor.Application.Components;
 using Microsoft.AspNetCore.Routing;
+using PriceListEditor.Application.ViewModels;
 
 namespace PriceListEditor.Tests
 {
