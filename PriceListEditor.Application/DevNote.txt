@@ -5,3 +5,7 @@
 Полезные страницы
 https://habr.com/ru/articles/510742/
 https://www.c-sharpcorner.com/article/passing-data-from-asp-net-mvc-to-javascript-a-guide-to-using-viewbag-and-viewda/?ysclid=m3h6s8o8f7284310540
+https://metanit.com/sharp/aspnet5/12.4.php
+https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/search?view=aspnetcore-8.0
+https://aspnetcore.readthedocs.io/en/stable/tutorials/first-mvc-app/search.html
+localhost:5000/Products/название_категории/Search=поисковый_запрос/PriceAsc|PriceDesc/Page1/Size1 - конечный вид URL

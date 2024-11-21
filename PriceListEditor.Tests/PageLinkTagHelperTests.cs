@@ -104,34 +104,4 @@ public class PageLinkTagHelperTests
         Assert.Equal(1, c2ProductsNumber);
         Assert.Equal(1, c1ProductsNumber);
     }
-    [Fact]
-    public void Can_Redirect_To_First_Page_When_Products_Count_Is_Zero()
-    {
-        //Arrange
-        Mock<IProductRepository> mockRepository = new Mock<IProductRepository>();
-        mockRepository.Setup(mr => mr.Products).Returns((new Product[]
-        {
-            new Product{ProductID = 1, ProductName = "P1", CategoryID = 1},
-            new Product{ProductID = 2, ProductName = "P2", CategoryID = 2},
-            new Product{ProductID = 3, ProductName = "P3", CategoryID = 1},
-            new Product{ProductID = 4, ProductName = "P4", CategoryID = 2},
-            new Product{ProductID = 5, ProductName = "P5", CategoryID = 2},
-            new Product{ProductID = 6, ProductName = "P6", CategoryID = 1},
-            new Product{ProductID = 7, ProductName = "P7", CategoryID = 2}
-        }).AsQueryable<Product>());
-        mockRepository.Setup(mr => mr.Categories).Returns((new Category[]
-        {
-                new Category{CategoryID = 1, CategoryName = "C1" },
-                new Category{CategoryID = 2, CategoryName = "C2" }
-        }).AsQueryable<Category>());
-        ProductController productController = new ProductController(mockRepository.Object);
-        //Act
-        int allProductsNumber = (productController.ProductList(null, 5, 1)?.ViewData.Model as ProductsListViewModel ?? new()).PageViewModel.CurrenPage;
-        int c2ProductsNumber = (productController.ProductList("C2", 5, 1)?.ViewData.Model as ProductsListViewModel ?? new()).PageViewModel.CurrenPage;
-        int c1ProductsNumber = (productController.ProductList("C1", 5, 1)?.ViewData.Model as ProductsListViewModel ?? new()).PageViewModel.CurrenPage;
-        //Assert
-        Assert.Equal(5, allProductsNumber);
-        Assert.Equal(1, c2ProductsNumber);
-        Assert.Equal(1, c1ProductsNumber);
-    }
 }

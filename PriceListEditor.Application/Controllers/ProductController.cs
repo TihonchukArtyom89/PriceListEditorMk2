@@ -43,8 +43,7 @@ public class ProductController : Controller
             {
                 CurrenPage = ViewBag.SelectedPage,
                 PageSize = pageSize,
-                TotalItems = category == null ?
-                productRepository.Products.Count() : productRepository.Products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count(),
+                TotalItems = category == null ? productRepository.Products.Count() : productRepository.Products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count(),                
                 Pseudonym = "Products"
             },
             CurrentCategory = (CurrentCategory ?? new Category { CategoryName = null ?? "" }).CategoryName,
