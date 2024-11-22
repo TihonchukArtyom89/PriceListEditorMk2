@@ -10,18 +10,10 @@
 -try to make another in another list some features wiht items of lst without page reloading 
 
 make at now
-- add enum of sort orders
-- change controller of products (ProductController cs in Controllers folder) to using sorting on price
-- change view of product list (Product cshtml in Views/Product folder) to using sorting on price
-- change page size selector view to using sorting on price
-- change URL scheme to using sorting on price
-- change page link tag helper to using sorting on price
-- fix markup on product list page (in one line header and price sort order link)
-- fix change sort order after page redirect (remove price sort order appointment in page link tag helper)
-- fix not working link of price sorting 
+- fix URL on first redirect to product list page 
 
 make in future
-- fix URL on first redirect to product list page (old url scheme is on all redirect links ???)
+- save the sort order after click on category button(rework sort parameter in product list of product controller)
 - make tag helper for price sort order
 - fix old unit tests
 - make unit tests for price sort order

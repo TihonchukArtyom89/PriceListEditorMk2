@@ -11,10 +11,10 @@ builder.Services.AddScoped<IProductRepository, EFProductRepository>();//create r
 var app = builder.Build();
 
 app.UseStaticFiles();//use static content from wwwroot folder
-app.MapControllerRoute("catpage", "Products/{category}/{priceSortOrder}/Page{productPage:int}/Size{pageSize:int}", new { Controller = "Product", Action = "ProductList" });//change url scheme
-app.MapControllerRoute("page", "Products/{priceSortOrder}/Page{productPage:int}/Size{pageSize:int}", new { Controller = "Product", Action = "ProductList", productPage = 1/*, category = "", priceSortOrder = SortOrder.PriceDesc*/ });//change url scheme
-app.MapControllerRoute("category", "Products/{priceSortOrder}/{category}", new { Controller = "Product", Action = "ProductList", productPage = 1, /*category = "", priceSortOrder = SortOrder.PriceDesc*/ });//change url scheme
-app.MapControllerRoute("pagination", "Products/{priceSortOrder}/Page{productPage}/Size{pageSize}", new { Controller = "Product", Action = "ProductList", productPage = 1/*, category = "", priceSortOrder = SortOrder.PriceDesc*/ });//change url scheme
+app.MapControllerRoute("catpage", "Products/{category}/{priceSortOrder}/Page{productPage:int}/Size{pageSize:int}", new { Controller = "Product", Action = "ProductList", productPage = 1, category = "", priceSortOrder = SortOrder.PriceDesc });//change url scheme
+app.MapControllerRoute("page", "Products/{priceSortOrder}/Page{productPage:int}/Size{pageSize:int}", new { Controller = "Product", Action = "ProductList", productPage = 1, category = "", priceSortOrder = SortOrder.PriceDesc });//change url scheme
+app.MapControllerRoute("category", "Products/{priceSortOrder}/{category}", new { Controller = "Product", Action = "ProductList", productPage = 1, category = "", priceSortOrder = SortOrder.PriceDesc });//change url scheme
+app.MapControllerRoute("pagination", "Products/{priceSortOrder}/Page{productPage}/Size{pageSize}", new { Controller = "Product", Action = "ProductList", productPage = 1, category = "", priceSortOrder = SortOrder.PriceDesc });//change url scheme
 app.MapDefaultControllerRoute();//registers MVC framework as source of endpoint by using default convention of mapping requests to classes and methods
 SeedData.EnsurePopulated(app);//fill db with sample data values//dotnet ef database drop --force --context PredpriyatieDBContext
 app.Run();
