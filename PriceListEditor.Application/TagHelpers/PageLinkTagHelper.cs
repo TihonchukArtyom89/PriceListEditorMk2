@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.Data.SqlClient;
 using PriceListEditor.Application.ViewModels;
-using System.Runtime.CompilerServices;
+using PriceListEditor.Application.Models;
 
 namespace PriceListEditor.Application.Infrastructure;
 
@@ -29,6 +29,7 @@ public class PageLinkTagHelper : TagHelper
     public string PageClassNormal { get; set; } = string.Empty;
     public string PageClassSelected { get; set; } = string.Empty;
     public string PageClassArrow { get; set; } = string.Empty;
+    public Models.SortOrder PagePriceSortOrder { get; set; } = Models.SortOrder.PriceDesc;
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
         if (ViewContext != null && PageModel != null)

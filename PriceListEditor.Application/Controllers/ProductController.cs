@@ -13,10 +13,11 @@ public class ProductController : Controller
     {
         productRepository = _productRepository;
     }
-    public ViewResult ProductList(string? category, int productPage = 1, int pageSize = 1)
+    public ViewResult ProductList(string? category, SortOrder priceSortOrder = SortOrder.PriceDesc, int productPage = 1, int pageSize = 1)
     {
         ViewBag.SelectedPageSize = pageSize;
         ViewBag.SelectedCategory = category;
+        ViewBag.PriceSortOrder = priceSortOrder == SortOrder.PriceDesc ? SortOrder.PriceAsc : SortOrder.PriceDesc;
         Category? CurrentCategory = category == null ? null : productRepository.Categories.Where(e => e.CategoryName == category).FirstOrDefault();
         IEnumerable<Product> products = productRepository.Products.Where(p => CurrentCategory == null || p.CategoryID == CurrentCategory.CategoryID).OrderBy(p => p.ProductID).Skip((productPage - 1) * pageSize).Take(pageSize);
         if(products.Count() == 0 && productPage != 1)
@@ -36,6 +37,12 @@ public class ProductController : Controller
                     ProductDescription = "Продуктов категории " + (CurrentCategory ?? new Category() { CategoryName = "Категория не указана" }).CategoryName + " не имеется!",
                     ProductPrice = 0.00M,
                 });
+        products = priceSortOrder switch
+        {
+            SortOrder.PriceAsc => products.OrderBy(e => e.ProductPrice),
+            SortOrder.PriceDesc => products.OrderByDescending(e => e.ProductPrice),
+            _=>products.OrderBy(e=>e.ProductID)
+        };
         ProductsListViewModel viewModel = new ProductsListViewModel
         {
             Products = products,

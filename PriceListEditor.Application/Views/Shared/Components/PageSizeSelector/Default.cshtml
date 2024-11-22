@@ -28,7 +28,7 @@
             newUrl.pathname = oldUrl.pathname.replace("Size" + oldSize, "Size" + document.querySelector('#pageSizeSelector').value);
         }
         else {
-            newUrl += '@Model.PageViewModel.Pseudonym' + "/Page1/Size" + document.querySelector('#pageSizeSelector').value;
+            newUrl += "@Model.PageViewModel.Pseudonym/@ViewBag.PriceSortOrder/Page1/Size" + document.querySelector('#pageSizeSelector').value;
         }
         window.location.href = newUrl;
     }
