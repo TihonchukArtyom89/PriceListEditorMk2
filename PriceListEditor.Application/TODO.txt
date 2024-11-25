@@ -10,11 +10,12 @@
 -try to make another in another list some features wiht items of lst without page reloading 
 
 make at now
-- fix URL on first redirect to product list page 
+-make class of tag helper of sorting link
 
 make in future
 - save the sort order after click on category button(rework sort parameter in product list of product controller)
 - make tag helper for price sort order
+- make taghelper more universal (parameters of page link in array which generated in view where is taghelper of sorting header is us using)
 - fix old unit tests
 - make unit tests for price sort order
 - add sorting feature(see on metainit - link in DevNote txt) 
