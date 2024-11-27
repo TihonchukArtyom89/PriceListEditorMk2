@@ -10,12 +10,12 @@
 -try to make another in another list some features wiht items of lst without page reloading 
 
 make at now
--make class of tag helper of sorting link
+- rework layout view (_Layout cshtml in Views/Shared folder) for using asp net core possibilities
+- change text on sorting link
+- synchronise text and sorting order 
 
 make in future
-- save the sort order after click on category button(rework sort parameter in product list of product controller)
-- make tag helper for price sort order
-- make taghelper more universal (parameters of page link in array which generated in view where is taghelper of sorting header is us using)
+- save the sort order after click on category button(call post query in js, after click on sorting link value of viewbag must be changing - or may be is hardcoded redirect to link - another bool parameter of clicking on sorting link???)
 - fix old unit tests
 - make unit tests for price sort order
 - add sorting feature(see on metainit - link in DevNote txt) 
