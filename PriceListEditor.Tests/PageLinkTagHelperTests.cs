@@ -66,9 +66,9 @@ public class PageLinkTagHelperTests
         }).AsQueryable<Category>());
         ProductController productController = new ProductController(mockRepository.Object);
         //Act
-        int allProductsNumber = (productController.ProductList(null, 2, 1)?.ViewData.Model as ProductsListViewModel ?? new()).PageViewModel.CurrenPage;
-        int c2ProductsNumber = (productController.ProductList("C2", 2, 1)?.ViewData.Model as ProductsListViewModel ?? new()).PageViewModel.CurrenPage;
-        int c1ProductsNumber = (productController.ProductList("C1", 2, 1)?.ViewData.Model as ProductsListViewModel ?? new()).PageViewModel.CurrenPage;
+        int allProductsNumber = (productController.ProductList(null, SortOrder.PriceDesc,2, 1)?.ViewData.Model as ProductsListViewModel ?? new()).PageViewModel.CurrenPage;
+        int c2ProductsNumber = (productController.ProductList("C2", SortOrder.PriceDesc, 2, 1)?.ViewData.Model as ProductsListViewModel ?? new()).PageViewModel.CurrenPage;
+        int c1ProductsNumber = (productController.ProductList("C1", SortOrder.PriceDesc, 2, 1)?.ViewData.Model as ProductsListViewModel ?? new()).PageViewModel.CurrenPage;
         //Assert
         Assert.Equal(2, allProductsNumber);
         Assert.Equal(2, c2ProductsNumber);
@@ -96,9 +96,9 @@ public class PageLinkTagHelperTests
         }).AsQueryable<Category>());
         ProductController productController = new ProductController(mockRepository.Object);
         //Act
-        int allProductsNumber = (productController.ProductList(null, 5, 1)?.ViewData.Model as ProductsListViewModel ?? new()).PageViewModel.CurrenPage;
-        int c2ProductsNumber = (productController.ProductList("C2", 5, 1)?.ViewData.Model as ProductsListViewModel ?? new()).PageViewModel.CurrenPage;
-        int c1ProductsNumber = (productController.ProductList("C1", 5, 1)?.ViewData.Model as ProductsListViewModel ?? new()).PageViewModel.CurrenPage;
+        int allProductsNumber = (productController.ProductList(null, SortOrder.PriceDesc, 5, 1)?.ViewData.Model as ProductsListViewModel ?? new()).PageViewModel.CurrenPage;
+        int c2ProductsNumber = (productController.ProductList("C2", SortOrder.PriceDesc, 5, 1)?.ViewData.Model as ProductsListViewModel ?? new()).PageViewModel.CurrenPage;
+        int c1ProductsNumber = (productController.ProductList("C1", SortOrder.PriceDesc, 5, 1)?.ViewData.Model as ProductsListViewModel ?? new()).PageViewModel.CurrenPage;
         //Assert
         Assert.Equal(5, allProductsNumber);
         Assert.Equal(1, c2ProductsNumber);

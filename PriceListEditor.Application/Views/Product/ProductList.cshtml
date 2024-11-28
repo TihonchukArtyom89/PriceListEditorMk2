@@ -1,7 +1,7 @@
 ﻿@model ProductsListViewModel
 
 <div id="categories" class="col-1">
-    <vc:category-filter/>
+    <vc:category-filter />
 </div>
 <div class="col-11">
     <div class="d-inline-block d-flex align-items-center">
@@ -14,23 +14,20 @@
     }
     @if (ViewBag.ProductCount > 0)
     {
-        <vc:page-size-selector list-view-model="@Model"/>
-        <div page-model="@Model?.PageViewModel" page-action="ProductList" page-class-enabled="true" page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary" 
-            page-class-arrow="btn-secondary" page-price-sort-order="@ViewBag.PriceSortOrder" page-url-category="@Model?.CurrentCategory!"
-            page-url-pageSize="@Model?.PageViewModel.PageSize ?? 1" class="btn-group pull-right m-1">
+        <vc:page-size-selector list-view-model="@Model" />
+        <div page-model="@Model?.PageViewModel" page-action="ProductList" page-class-enabled="true" page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
+             page-class-arrow="btn-secondary" page-price-sort-order="@ViewBag.PriceSortOrder" page-url-category="@Model?.CurrentCategory!"
+             page-url-pageSize="@Model?.PageViewModel.PageSize ?? 1" class="btn-group pull-right m-1">
         </div>
     }
 </div>
 @* <script>
     function sortClick() {
-        var priceSortOrder = "@ViewBag.PriceSortOrder";
-        alert(priceSortOrder);
-        if (priceSortOrder == "PriceAsc") {
-            priceSortOrder = "PriceDesc";
+        alert("@ViewBag.PriceSortOrder");
+        @{//
+            // var oldValue = ViewBag.PriceSortOrder;
+        ViewBag.PriceSortOrder = ViewBag.PriceSortOrder == SortOrder.PriceDesc ? SortOrder.PriceAsc : SortOrder.PriceDesc;
         }
-        else {
-            priceSortOrder = "PriceAsc";
-        }
-        alert(priceSortOrder);        
+        alert("@ViewBag.PriceSortOrder");
     }
 </script> *@

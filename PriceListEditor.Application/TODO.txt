@@ -10,13 +10,11 @@
 -try to make another in another list some features wiht items of lst without page reloading 
 
 make at now
-- rework layout view (_Layout cshtml in Views/Shared folder) for using asp net core possibilities
-- change text on sorting link
-- synchronise text and sorting order 
+- fix old unit tests
 
 make in future
-- save the sort order after click on category button(call post query in js, after click on sorting link value of viewbag must be changing - or may be is hardcoded redirect to link - another bool parameter of clicking on sorting link???)
-- fix old unit tests
+- save the sort order after click on category button(in js script on product list view try to make hardcoded redirect to link - if now working then abandon this )
+- rework sorting feature to add sorting on product name
 - make unit tests for price sort order
 - add sorting feature(see on metainit - link in DevNote txt) 
 - try to add search feature(see on links in DevNote txt) 
