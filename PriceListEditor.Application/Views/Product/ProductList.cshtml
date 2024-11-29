@@ -6,7 +6,9 @@
 <div class="col-11">
     <div class="d-inline-block d-flex align-items-center">
         <h4 class="m-1 pb-2"> Cписок продуктов </h4>
-        <a class="m-1 pb-2 btn btn-info" asp-controller="Product" asp-action="ProductList" asp-route-category="@Model?.CurrentCategory" asp-route-productPage="@ViewBag.SelectedPage" asp-route-pageSize="@ViewBag.SelectedPageSize" asp-route-priceSortOrder="@ViewBag.PriceSortOrder" onclick="sortClick()"> @ViewBag.SortingText </a>
+        <a class="m-1 pb-2 btn btn-info" asp-controller="Product" asp-action="ProductList" asp-route-category="@Model?.CurrentCategory" asp-route-productPage="@ViewBag.SelectedPage" asp-route-pageSize="@ViewBag.SelectedPageSize" asp-route-sortOrder="@ViewBag.PriceSortOrder"> @ViewBag.PriceSortingText </a>
+        <a class="m-1 pb-2 btn btn-info" asp-controller="Product" asp-action="ProductList" asp-route-category="@Model?.CurrentCategory" asp-route-productPage="@ViewBag.SelectedPage" asp-route-pageSize="@ViewBag.SelectedPageSize" asp-route-sortOrder="@ViewBag.NameSortOrder"> @ViewBag.NameSortingText </a>
+        <a class="m-1 pb-2 btn btn-info" asp-controller="Product" asp-action="ProductList" asp-route-category="@Model?.CurrentCategory" asp-route-productPage="@ViewBag.SelectedPage" asp-route-pageSize="@ViewBag.SelectedPageSize" asp-route-sortOrder="@SortOrder.Neutral"> По умолчанию </a>
     </div>
     @foreach (Product p in Model?.Products ?? Enumerable.Empty<Product>())
     {
@@ -16,18 +18,8 @@
     {
         <vc:page-size-selector list-view-model="@Model" />
         <div page-model="@Model?.PageViewModel" page-action="ProductList" page-class-enabled="true" page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
-             page-class-arrow="btn-secondary" page-price-sort-order="@ViewBag.PriceSortOrder" page-url-category="@Model?.CurrentCategory!"
+             page-class-arrow="btn-secondary" page-sort-order="@ViewBag.SortOrder" page-url-category="@Model?.CurrentCategory!"
              page-url-pageSize="@Model?.PageViewModel.PageSize ?? 1" class="btn-group pull-right m-1">
         </div>
     }
 </div>
-@* <script>
-    function sortClick() {
-        alert("@ViewBag.PriceSortOrder");
-        @{//
-            // var oldValue = ViewBag.PriceSortOrder;
-        ViewBag.PriceSortOrder = ViewBag.PriceSortOrder == SortOrder.PriceDesc ? SortOrder.PriceAsc : SortOrder.PriceDesc;
-        }
-        alert("@ViewBag.PriceSortOrder");
-    }
-</script> *@

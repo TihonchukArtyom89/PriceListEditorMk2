@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Data.SqlClient;
 using PriceListEditor.Application.ViewModels;
 using PriceListEditor.Application.Models;
+using SortOrder = PriceListEditor.Application.Models.SortOrder;
 
 namespace PriceListEditor.Application.Infrastructure;
 
@@ -29,7 +30,7 @@ public class PageLinkTagHelper : TagHelper
     public string PageClassNormal { get; set; } = string.Empty;
     public string PageClassSelected { get; set; } = string.Empty;
     public string PageClassArrow { get; set; } = string.Empty;
-    public Models.SortOrder PagePriceSortOrder { get; set; } = Models.SortOrder.PriceDesc;
+    public SortOrder PageSortOrder { get; set; } = SortOrder.Neutral;
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
         if (ViewContext != null && PageModel != null)
@@ -66,6 +67,7 @@ public class PageLinkTagHelper : TagHelper
         TagBuilder pageLink = new TagBuilder("a");
         PageUrlValues["productPage"] = pageNumber;
         PageUrlValues["pageSize"] = (PageModel ?? new()).PageSize;
+        PageUrlValues["sortOrder"] = PageSortOrder;
         pageLink.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
         pageLink.AddCssClass(css1);
         pageLink.AddCssClass(css2);

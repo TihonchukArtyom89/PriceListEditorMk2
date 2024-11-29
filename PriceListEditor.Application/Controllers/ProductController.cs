@@ -11,13 +11,14 @@ public class ProductController : Controller
     {
         productRepository = _productRepository;
     }
-    public ViewResult ProductList(string? category, SortOrder priceSortOrder = SortOrder.PriceDesc, int productPage = 1, int pageSize = 1)
+    public ViewResult ProductList(string? category, SortOrder sortOrder = SortOrder.Neutral, int productPage = 1, int pageSize = 1)
     {
         ViewBag.SelectedPageSize = pageSize;
         ViewBag.SelectedCategory = category;
-        //ViewBag.PriceSortOrder = priceSortOrder;
-        ViewBag.PriceSortOrder = priceSortOrder == SortOrder.PriceDesc ? SortOrder.PriceAsc : SortOrder.PriceDesc;
-        ViewBag.SortingText = priceSortOrder == SortOrder.PriceDesc ? "От дорогих к дешёвым" : "От дешёвых к дорогим";
+        ViewBag.PriceSortOrder = sortOrder == SortOrder.PriceDesc ? SortOrder.PriceAsc : SortOrder.PriceDesc;
+        ViewBag.NameSortOrder = sortOrder == SortOrder.NameDesc ? SortOrder.NameAsc : SortOrder.NameDesc;
+        ViewBag.PriceSortingText = sortOrder == SortOrder.PriceDesc ? "От дорогих к дешёвым" : "От дешёвых к дорогим";
+        ViewBag.NameSortingText = sortOrder == SortOrder.NameDesc ? "От Я до А" : "От А до Я";
         Category? CurrentCategory = category == null ? null : productRepository.Categories.Where(e => e.CategoryName == category).FirstOrDefault();
         IEnumerable<Product> products = productRepository.Products.Where(p => CurrentCategory == null || p.CategoryID == CurrentCategory.CategoryID).OrderBy(p => p.ProductID).Skip((productPage - 1) * pageSize).Take(pageSize);
         if(products.Count() == 0 && productPage != 1)
@@ -37,12 +38,29 @@ public class ProductController : Controller
                     ProductDescription = "Продуктов категории " + (CurrentCategory ?? new Category() { CategoryName = "Категория не указана" }).CategoryName + " не имеется!",
                     ProductPrice = 0.00M,
                 });
-        products = priceSortOrder switch
+        switch(sortOrder)
         {
-            SortOrder.PriceAsc => products.OrderBy(e => e.ProductPrice),
-            SortOrder.PriceDesc => products.OrderByDescending(e => e.ProductPrice),
-            _=>products.OrderBy(e=>e.ProductPrice)
-        };
+            case SortOrder.PriceAsc:
+                products = products.OrderBy(e => e.ProductPrice);
+                ViewBag.SortOrder = ViewBag.PriceSortOrder;
+                break;
+            case SortOrder.PriceDesc:
+                products = products.OrderByDescending(e => e.ProductPrice);
+                ViewBag.SortOrder = ViewBag.PriceSortOrder;
+                break;
+            case SortOrder.NameAsc:
+                products = products.OrderBy(e => e.ProductName);
+                ViewBag.SortOrder = ViewBag.NameSortOrder;
+                break;
+            case SortOrder.NameDesc:
+                products = products.OrderByDescending(e => e.ProductName);
+                ViewBag.SortOrder = ViewBag.NameSortOrder;
+                break;
+            default:
+                products = products.OrderBy(e => e.ProductID);
+                ViewBag.SortOrder = SortOrder.Neutral;
+                break;
+        }
         ProductsListViewModel viewModel = new ProductsListViewModel
         {
             Products = products,

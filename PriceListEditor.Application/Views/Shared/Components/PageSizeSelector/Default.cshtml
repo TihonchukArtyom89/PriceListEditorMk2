@@ -23,13 +23,51 @@
     function SelectedItemChanged(object) {
         var oldUrl = new URL(window.location.href);
         var newUrl = new URL(oldUrl.protocol + "//" + oldUrl.host);
-        if (oldUrl.pathname.includes("Size")) {
-            var oldSize = oldUrl.pathname.slice(oldUrl.pathname.indexOf("Size") + 4, oldUrl.pathname.length);
-            newUrl.pathname = oldUrl.pathname.replace("Size" + oldSize, "Size" + document.querySelector('#pageSizeSelector').value);
+        var queryParams = {
+            category = null,
+            productPage = 1,
+            pageSize = 1,
+            sortOrder = @SortOrder.Neutral
+        };
+        var urlQueryString = new URLSearchParams(queryParams);
+        urlQueryString = oldUrl.searchParams;
+        if (oldUrl.search != "") {
+            // alert('is not empty');
+            // alert('category ' + oldUrl.searchParams.get('category'));
+            // alert('productPage ' + oldUrl.searchParams.get('productPage'));
+            // alert('sortOrder ' + oldUrl.searchParams.get('sortOrder'));
+            // alert('pageSize ' + oldUrl.searchParams.get('pageSize'));
+            // oldUrl.searchParams.set('pageSize') = document.querySelector('#pageSizeSelector').value);
+            urlQueryString.pageSize = oldUrl.searchParams.get('pageSize');
+            //go to product list
+            //new page size
+            //old category - check if category existing
+            //old page number
+            //sortorder like viewbag/sortodred
+            // alert(oldUrl.search);
         }
         else {
-            newUrl += "@Model.PageViewModel.Pseudonym/@ViewBag.PriceSortOrder/Page1/Size" + document.querySelector('#pageSizeSelector').value;
+            // alert('is empty');
+            urlQueryString.pageSize = document.querySelector('#pageSizeSelector').value);
+            urlQueryString.productPage = 1;
+            urlQueryString.productPage = "@ViewBag.SortOrder";
+            // oldUrl.searchParams.set('pageSize') = document.querySelector('#pageSizeSelector').value);
+            // oldUrl.searchParams.set('productPage') = 1;
+            // oldUrl.searchParams.set('sortOrder') = "@ViewBag.SortOrder";
+            //go to product list
+            //new page size
+            //category not here
+            //pagenumber 1
+            //sortorder like viewbag.sortorder
         }
-        window.location.href = newUrl;
+        // // if (oldUrl.pathname.includes("Size")) {
+        // //     var oldSize = oldUrl.pathname.slice(oldUrl.pathname.indexOf("Size") + 4, oldUrl.pathname.length);
+        // //     newUrl.pathname = oldUrl.pathname.replace("Size" + oldSize, "Size" + document.querySelector('#pageSizeSelector').value);
+        // // }
+        // // else {
+        // //     newUrl += "@Model.PageViewModel.Pseudonym/@ViewBag.SortOrder/Page1/Size" + document.querySelector('#pageSizeSelector').value;
+        // // }
+        // // window.location.href = newUrl;
+        window.location.href = oldUrl;
     }
 </script>

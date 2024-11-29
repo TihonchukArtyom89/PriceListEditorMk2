@@ -10,11 +10,18 @@
 -try to make another in another list some features wiht items of lst without page reloading 
 
 make at now
-- fix old unit tests
+- change sort order enum to add neutral sorting
+- change product controller to add name and neutral sorting
+- change product list view to add name and neutral sorting
+- change page size selector to using new type of sorting
 
 make in future
-- save the sort order after click on category button(in js script on product list view try to make hardcoded redirect to link - if now working then abandon this )
+- rewrite page size selector view component (script with changing query parameters - look to new link in DevNote)
+- delete url scheme improvement (to much time to work with this)
+- fix url scheme 
+- synchronize sorting text and sort order
 - rework sorting feature to add sorting on product name
+- rework sorting feature to add neutral sorting
 - make unit tests for price sort order
 - add sorting feature(see on metainit - link in DevNote txt) 
 - try to add search feature(see on links in DevNote txt) 
