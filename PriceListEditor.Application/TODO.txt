@@ -10,18 +10,20 @@
 -try to make another in another list some features wiht items of lst without page reloading 
 
 make at now
-- change sort order enum to add neutral sorting
-- change product controller to add name and neutral sorting
-- change product list view to add name and neutral sorting
-- change page size selector to using new type of sorting
-
-make in future
-- rewrite page size selector view component (script with changing query parameters - look to new link in DevNote)
-- delete url scheme improvement (to much time to work with this)
+- delete url scheme improvement 
 - fix url scheme 
+- rewrite page size selector view component
 - synchronize sorting text and sort order
 - rework sorting feature to add sorting on product name
 - rework sorting feature to add neutral sorting
+
+make in future
+- fix InvalidOperationException after change page size when category is selected
 - make unit tests for price sort order
+- unit test for name descending
+- unit test for price descending
+- unit test for name ascending
+- unit test for price ascending
+- unit test for neutral sorting
 - add sorting feature(see on metainit - link in DevNote txt) 
 - try to add search feature(see on links in DevNote txt) 

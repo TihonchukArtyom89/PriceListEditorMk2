@@ -21,53 +21,21 @@
 
 <script>
     function SelectedItemChanged(object) {
-        var oldUrl = new URL(window.location.href);
-        var newUrl = new URL(oldUrl.protocol + "//" + oldUrl.host);
-        var queryParams = {
-            category = null,
-            productPage = 1,
-            pageSize = 1,
-            sortOrder = @SortOrder.Neutral
-        };
-        var urlQueryString = new URLSearchParams(queryParams);
-        urlQueryString = oldUrl.searchParams;
-        if (oldUrl.search != "") {
-            // alert('is not empty');
-            // alert('category ' + oldUrl.searchParams.get('category'));
-            // alert('productPage ' + oldUrl.searchParams.get('productPage'));
-            // alert('sortOrder ' + oldUrl.searchParams.get('sortOrder'));
-            // alert('pageSize ' + oldUrl.searchParams.get('pageSize'));
-            // oldUrl.searchParams.set('pageSize') = document.querySelector('#pageSizeSelector').value);
-            urlQueryString.pageSize = oldUrl.searchParams.get('pageSize');
-            //go to product list
-            //new page size
-            //old category - check if category existing
-            //old page number
-            //sortorder like viewbag/sortodred
-            // alert(oldUrl.search);
+        var url = new URL(window.location.href);
+        url.searchParams.set('pageSize', document.querySelector('#pageSizeSelector').value);
+        url.searchParams.set('sortOrder', "@ViewBag.SortOrder");
+        if (url.search != "") 
+        {
+            if (url.searchParams.get('category') != null) 
+            {
+                url.searchParams.set('category', "@ViewBag.SelectedCategory");
+            }
+            url.searchParams.set('productPage', "@Model.PageViewModel.CurrenPage");
         }
-        else {
-            // alert('is empty');
-            urlQueryString.pageSize = document.querySelector('#pageSizeSelector').value);
-            urlQueryString.productPage = 1;
-            urlQueryString.productPage = "@ViewBag.SortOrder";
-            // oldUrl.searchParams.set('pageSize') = document.querySelector('#pageSizeSelector').value);
-            // oldUrl.searchParams.set('productPage') = 1;
-            // oldUrl.searchParams.set('sortOrder') = "@ViewBag.SortOrder";
-            //go to product list
-            //new page size
-            //category not here
-            //pagenumber 1
-            //sortorder like viewbag.sortorder
+        else 
+        {
+            url.searchParams.set('productPage', 1);
         }
-        // // if (oldUrl.pathname.includes("Size")) {
-        // //     var oldSize = oldUrl.pathname.slice(oldUrl.pathname.indexOf("Size") + 4, oldUrl.pathname.length);
-        // //     newUrl.pathname = oldUrl.pathname.replace("Size" + oldSize, "Size" + document.querySelector('#pageSizeSelector').value);
-        // // }
-        // // else {
-        // //     newUrl += "@Model.PageViewModel.Pseudonym/@ViewBag.SortOrder/Page1/Size" + document.querySelector('#pageSizeSelector').value;
-        // // }
-        // // window.location.href = newUrl;
-        window.location.href = oldUrl;
+        window.location.href = url;
     }
 </script>

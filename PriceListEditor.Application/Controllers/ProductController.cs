@@ -17,8 +17,8 @@ public class ProductController : Controller
         ViewBag.SelectedCategory = category;
         ViewBag.PriceSortOrder = sortOrder == SortOrder.PriceDesc ? SortOrder.PriceAsc : SortOrder.PriceDesc;
         ViewBag.NameSortOrder = sortOrder == SortOrder.NameDesc ? SortOrder.NameAsc : SortOrder.NameDesc;
-        ViewBag.PriceSortingText = sortOrder == SortOrder.PriceDesc ? "От дорогих к дешёвым" : "От дешёвых к дорогим";
-        ViewBag.NameSortingText = sortOrder == SortOrder.NameDesc ? "От Я до А" : "От А до Я";
+        ViewBag.PriceSortingText = sortOrder != SortOrder.PriceDesc ? "От дорогих к дешёвым" : "От дешёвых к дорогим";
+        ViewBag.NameSortingText = sortOrder != SortOrder.NameDesc ? "От Я до А" : "От А до Я";
         Category? CurrentCategory = category == null ? null : productRepository.Categories.Where(e => e.CategoryName == category).FirstOrDefault();
         IEnumerable<Product> products = productRepository.Products.Where(p => CurrentCategory == null || p.CategoryID == CurrentCategory.CategoryID).OrderBy(p => p.ProductID).Skip((productPage - 1) * pageSize).Take(pageSize);
         if(products.Count() == 0 && productPage != 1)
