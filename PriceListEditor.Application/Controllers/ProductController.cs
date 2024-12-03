@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PriceListEditor.Application.Models;
 using PriceListEditor.Application.ViewModels;
+using System.Web;
 
 namespace PriceListEditor.Application.Controllers;
 
@@ -19,7 +20,14 @@ public class ProductController : Controller
         ViewBag.NameSortOrder = sortOrder == SortOrder.NameDesc ? SortOrder.NameAsc : SortOrder.NameDesc;
         ViewBag.PriceSortingText = sortOrder != SortOrder.PriceDesc ? "От дорогих к дешёвым" : "От дешёвых к дорогим";
         ViewBag.NameSortingText = sortOrder != SortOrder.NameDesc ? "От Я до А" : "От А до Я";
-        Category? CurrentCategory = category == null ? null : productRepository.Categories.Where(e => e.CategoryName == category).FirstOrDefault();
+        var decoded = HttpUtility.HtmlDecode(category);
+        //Category? CurrentCategory = category == null ? null : productRepository.Categories.Where(e => e.CategoryName == category).FirstOrDefault();
+        Category? CurrentCategory = category == null ? null : productRepository.Categories.Where(e => e.CategoryName == HttpUtility.HtmlDecode(category)).FirstOrDefault();//maybe this look like until page size selector is not tag hepler(because hardcode redirect from JS script from view)
+        if (CurrentCategory == null && category!=null)//check if category not right transferred to prodcut controller 
+        {
+            category = null;
+            CurrentCategory = null;
+        }
         IEnumerable<Product> products = productRepository.Products.Where(p => CurrentCategory == null || p.CategoryID == CurrentCategory.CategoryID).OrderBy(p => p.ProductID).Skip((productPage - 1) * pageSize).Take(pageSize);
         if(products.Count() == 0 && productPage != 1)
         {
@@ -68,11 +76,20 @@ public class ProductController : Controller
             {
                 CurrenPage = ViewBag.SelectedPage,
                 PageSize = pageSize,
-                TotalItems = category == null ? productRepository.Products.Count() : productRepository.Products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count(),                
+                TotalItems = category == null ? productRepository.Products.Count() : productRepository.Products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count(),
                 Pseudonym = "Products"
             },
             CurrentCategory = (CurrentCategory ?? new Category { CategoryName = null ?? "" }).CategoryName,
         };
+        //ProductsListViewModel viewModel = new ProductsListViewModel();
+        //viewModel.Products = products;
+        //PageViewModel pageViewModel = new PageViewModel();
+        //pageViewModel.CurrenPage = ViewBag.SelectedPage;
+        //pageViewModel.PageSize = pageSize;
+        //pageViewModel.TotalItems = category == null ? productRepository.Products.Count() : productRepository.Products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count();
+        //pageViewModel.Pseudonym = "Products";
+        //viewModel.PageViewModel = pageViewModel;
+        //viewModel.CurrentCategory = (CurrentCategory ?? new Category { CategoryName = null ?? "" }).CategoryName;
         return View(viewModel);
     }
 }

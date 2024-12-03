@@ -15,7 +15,6 @@ public class CategoryFilterViewComponent : ViewComponent
 
     public IViewComponentResult Invoke()
     {
-        ViewBag.SelectedCategory = RouteData?.Values["category"];
         return View(productRepository.Categories.Select(e => e.CategoryName).OrderBy(e => e));
     }
 }

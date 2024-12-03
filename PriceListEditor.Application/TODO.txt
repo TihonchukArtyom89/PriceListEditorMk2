@@ -10,20 +10,17 @@
 -try to make another in another list some features wiht items of lst without page reloading 
 
 make at now
-- delete url scheme improvement 
-- fix url scheme 
-- rewrite page size selector view component
-- synchronize sorting text and sort order
-- rework sorting feature to add sorting on product name
-- rework sorting feature to add neutral sorting
+- partically fix InvalidOperationException after change page size when category is selected
+- fix highlight selected category button feature
 
 make in future
-- fix InvalidOperationException after change page size when category is selected
+- fix InvalidOperationException after change page size when category is selected (rework page size selector to tag helper or use redirect controller action asp .net core)
+- make sorting tag helper - ??
 - make unit tests for price sort order
 - unit test for name descending
 - unit test for price descending
 - unit test for name ascending
 - unit test for price ascending
-- unit test for neutral sorting
+- unit test for neutral sortingr
 - add sorting feature(see on metainit - link in DevNote txt) 
 - try to add search feature(see on links in DevNote txt) 
