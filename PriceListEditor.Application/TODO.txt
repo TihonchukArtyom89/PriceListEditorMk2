@@ -10,10 +10,11 @@
 -try to make another in another list some features wiht items of lst without page reloading 
 
 make at now
-- partically fix InvalidOperationException after change page size when category is selected
-- fix highlight selected category button feature
+- make redirect to another page without JS script
 
 make in future
+- fix enable sorting after select product page or category
+- set value of new page size in page size selector view component
 - fix InvalidOperationException after change page size when category is selected (rework page size selector to tag helper or use redirect controller action asp .net core)
 - make sorting tag helper - ??
 - make unit tests for price sort order

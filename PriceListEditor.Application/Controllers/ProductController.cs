@@ -81,15 +81,19 @@ public class ProductController : Controller
             },
             CurrentCategory = (CurrentCategory ?? new Category { CategoryName = null ?? "" }).CategoryName,
         };
-        //ProductsListViewModel viewModel = new ProductsListViewModel();
-        //viewModel.Products = products;
-        //PageViewModel pageViewModel = new PageViewModel();
-        //pageViewModel.CurrenPage = ViewBag.SelectedPage;
-        //pageViewModel.PageSize = pageSize;
-        //pageViewModel.TotalItems = category == null ? productRepository.Products.Count() : productRepository.Products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count();
-        //pageViewModel.Pseudonym = "Products";
-        //viewModel.PageViewModel = pageViewModel;
-        //viewModel.CurrentCategory = (CurrentCategory ?? new Category { CategoryName = null ?? "" }).CategoryName;
         return View(viewModel);
+    }
+    [HttpPost]
+    public IActionResult RedirectWithPageSizeSelected(string? category, SortOrder sortOrder = SortOrder.Neutral, int productPage = 1, int pageSize = 1)
+    {
+        if(sortOrder == SortOrder.NameAsc || sortOrder == SortOrder.NameDesc)
+        {
+            sortOrder = sortOrder == SortOrder.NameDesc ? SortOrder.NameAsc : SortOrder.NameDesc;
+        }
+        if(sortOrder == SortOrder.PriceAsc || sortOrder == SortOrder.PriceDesc)
+        {
+            sortOrder = sortOrder == SortOrder.PriceDesc ? SortOrder.PriceAsc : SortOrder.PriceDesc;
+        }
+        return RedirectToAction("ProductList", "Product", new { category = category, sortOrder = sortOrder, productPage = productPage, pageSize=pageSize});
     }
 }

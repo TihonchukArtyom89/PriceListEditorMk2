@@ -1,14 +1,23 @@
 ﻿@model BaseListViewModel
 
-<form method="post" id=@("form"+@Model.PageViewModel.Pseudonym+"PageSizeSelector") onchange="SelectedItemChanged(this)" asp-controller="Product" asp-action="ProductList">
+<form method="post" id=@("form"+@Model.PageViewModel.Pseudonym+"PageSizeSelector") onchange="SelectedItemChanged(this)" asp-controller="Product" asp-action="RedirectWithPageSizeSelected" asp-route-category="@ViewBag.SelectedCategory" asp-route-productPage="@ViewBag.SelectedPage" asp-route-pageSize="@ViewBag.SelectedPageSize" asp-route-sortOrder="@ViewBag.SortOrder">
     <div class="d-grip gap-2">
         <b>Выберите размер страницы</b>
         <select id="pageSizeSelector">
             @foreach (int pageSize in Model.PageSizes)
             {
+                @*                 @if (pageSize == Model.PageViewModel.PageSize)
+            {
+            <option value="@pageSize" selected>@pageSize</option>
+            }
+            else
+            {
+            <option value="@pageSize">@pageSize</option>
+            } *@
                 @if (pageSize == Model.PageViewModel.PageSize)
                 {
-                    <option value="@pageSize" selected>@pageSize</option>
+                    <option selected>@pageSize</option>
+                    ViewBag.SelectedPageSize = pageSize;
                 }
                 else
                 {
@@ -16,26 +25,37 @@
                 }
             }
         </select>
+        <button id="submitButton" type="submit">Выбрать</button>
     </div>
 </form>
+@* -сделать кнопку невидимой*@
+@* -в JS скрипте на странице инициировать программный клик по кнопке подтверждения *@
+@* -разобраться в передаче параметров *@
 
 <script>
     function SelectedItemChanged(object) {
-        var url = new URL(window.location.href);
-        url.searchParams.set('pageSize', document.querySelector('#pageSizeSelector').value);
-        url.searchParams.set('sortOrder', "@ViewBag.SortOrder");
-        if (url.search != "") 
-        {
-            if (url.searchParams.get('category') != null) 
-            {
-                url.searchParams.set('category', "@ViewBag.SelectedCategory");
-            }
-            url.searchParams.set('productPage', "@Model.PageViewModel.CurrenPage");
-        }
-        else 
-        {
-            url.searchParams.set('productPage', 1);
-        }
-        window.location.href = url;
+        document.getElementById("submitButton").dispatchEvent(new Event("click"));
+    @{
+        ViewBag.SelectedPageSize = 5;
+}
+        // @{
+        // ViewBag.SelectedPageSize = pageSize;}
+
+        // var url = new URL(window.location.href);
+        // url.searchParams.set('pageSize', document.querySelector('#pageSizeSelector').value);
+        // url.searchParams.set('sortOrder', "@ViewBag.SortOrder");
+        // if (url.search != "")
+        // {
+        //     if (url.searchParams.get('category') != null)
+        //     {
+        //         url.searchParams.set('category', "@ViewBag.SelectedCategory");
+        //     }
+        //     url.searchParams.set('productPage', "@Model.PageViewModel.CurrenPage");
+        // }
+        // else
+        // {
+        //     url.searchParams.set('productPage', 1);
+        // }
+        // window.location.href = url;
     }
 </script>
