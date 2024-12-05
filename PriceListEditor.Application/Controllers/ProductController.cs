@@ -94,6 +94,7 @@ public class ProductController : Controller
         {
             sortOrder = sortOrder == SortOrder.PriceDesc ? SortOrder.PriceAsc : SortOrder.PriceDesc;
         }
+        ViewBag.SelectedPageSize = pageSize;
         return RedirectToAction("ProductList", "Product", new { category = category, sortOrder = sortOrder, productPage = productPage, pageSize=pageSize});
     }
 }

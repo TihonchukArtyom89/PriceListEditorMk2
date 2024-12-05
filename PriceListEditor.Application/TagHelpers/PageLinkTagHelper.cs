@@ -35,6 +35,14 @@ public class PageLinkTagHelper : TagHelper
     {
         if (ViewContext != null && PageModel != null)
         {
+            if (PageSortOrder == SortOrder.NameAsc || PageSortOrder == SortOrder.NameDesc)
+            {
+                PageSortOrder = PageSortOrder == SortOrder.NameDesc ? SortOrder.NameAsc : SortOrder.NameDesc;
+            }
+            if (PageSortOrder == SortOrder.PriceAsc || PageSortOrder == SortOrder.PriceDesc)
+            {
+                PageSortOrder = PageSortOrder == SortOrder.PriceDesc ? SortOrder.PriceAsc : SortOrder.PriceDesc;
+            }
             IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
             string css1 = "", css2 = "";
             TagBuilder pagination = new TagBuilder("div");

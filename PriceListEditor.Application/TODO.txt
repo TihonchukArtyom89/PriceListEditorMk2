@@ -6,22 +6,22 @@
 +create category selector for product list view
 -add a few features to product list 
 -add buttons with crud actions displaying on model popup on product list view
--make another list of pricelists of products (controller,view & buttons etc.) 
--try to make another in another list some features wiht items of lst without page reloading 
+-make another list of pricelists of products (controller, view & buttons etc.) 
+-try to make another in another list some features with items of list without page reloading 
 
 make at now
-- make redirect to another page without JS script
-
-make in future
 - fix enable sorting after select product page or category
 - set value of new page size in page size selector view component
 - fix InvalidOperationException after change page size when category is selected (rework page size selector to tag helper or use redirect controller action asp .net core)
-- make sorting tag helper - ??
-- make unit tests for price sort order
+- save selected page size value after page redirecting
 - unit test for name descending
-- unit test for price descending
 - unit test for name ascending
+
+make in future
+- fix old unit test
+- make unit tests for price sort order
+- unit test for price descending
 - unit test for price ascending
-- unit test for neutral sortingr
+- unit test for neutral sorting
 - add sorting feature(see on metainit - link in DevNote txt) 
 - try to add search feature(see on links in DevNote txt) 

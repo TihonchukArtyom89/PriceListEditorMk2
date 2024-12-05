@@ -233,4 +233,45 @@ public class ProductControllerTests
         //Assert
         Assert.Equal(new int[] { 1, 2, 3, 5, 10 }, results);
     }
+    [Fact]
+    public void Can_Right_Sort_Product_On_Name()
+    {
+        //Arrange
+        Mock<IProductRepository> mockRepository = new Mock<IProductRepository>();
+        mockRepository.Setup(mr => mr.Products).Returns((new Product[]
+        {
+            new Product{ProductID = 7, ProductName = "P1", CategoryID = 1},
+            new Product{ProductID = 4, ProductName = "P2", CategoryID = 2},
+            new Product{ProductID = 3, ProductName = "P3", CategoryID = 1},
+            new Product{ProductID = 2, ProductName = "P4", CategoryID = 2},
+            new Product{ProductID = 6, ProductName = "P5", CategoryID = 3},
+            new Product{ProductID = 5, ProductName = "P6", CategoryID = 1},
+            new Product{ProductID = 1, ProductName = "P7", CategoryID = 2}
+        }).AsQueryable<Product>());
+        mockRepository.Setup(mr => mr.Categories).Returns((new Category[]
+        {
+                new Category{CategoryID = 1, CategoryName = "C1" },
+                new Category{CategoryID = 2, CategoryName = "C2" },
+                new Category{CategoryID = 3, CategoryName = "C3" }
+        }).AsQueryable<Category>());
+        ProductController productController = new(mockRepository.Object);
+        //Act
+        ProductsListViewModel? resultNameAsc = productController.ProductList(null, SortOrder.NameAsc, 1, 10)?.ViewData.Model as ProductsListViewModel ?? new();
+        ProductsListViewModel? resultNameDesc = productController.ProductList(null, SortOrder.NameDesc, 1, 10)?.ViewData.Model as ProductsListViewModel ?? new();
+        //Assert
+        Assert.Equal("P1", resultNameAsc.Products.FirstOrDefault()!.ProductName);
+        Assert.Equal("P2", resultNameAsc.Products.Skip(1).FirstOrDefault()!.ProductName);
+        Assert.Equal("P3", resultNameAsc.Products.Skip(2).FirstOrDefault()!.ProductName);
+        Assert.Equal("P4", resultNameAsc.Products.Skip(3).FirstOrDefault()!.ProductName);
+        Assert.Equal("P5", resultNameAsc.Products.Skip(4).FirstOrDefault()!.ProductName);
+        Assert.Equal("P6", resultNameAsc.Products.Skip(5).FirstOrDefault()!.ProductName);
+        Assert.Equal("P7", resultNameAsc.Products.Skip(6).FirstOrDefault()!.ProductName);
+        Assert.Equal("P7", resultNameDesc.Products.FirstOrDefault()!.ProductName);
+        Assert.Equal("P6", resultNameDesc.Products.Skip(1).FirstOrDefault()!.ProductName);
+        Assert.Equal("P5", resultNameDesc.Products.Skip(2).FirstOrDefault()!.ProductName);
+        Assert.Equal("P4", resultNameDesc.Products.Skip(3).FirstOrDefault()!.ProductName);
+        Assert.Equal("P3", resultNameDesc.Products.Skip(4).FirstOrDefault()!.ProductName);
+        Assert.Equal("P2", resultNameDesc.Products.Skip(5).FirstOrDefault()!.ProductName);
+        Assert.Equal("P1", resultNameDesc.Products.Skip(6).FirstOrDefault()!.ProductName);
+    }
 }
