@@ -10,5 +10,4 @@ https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/search?vie
 https://aspnetcore.readthedocs.io/en/stable/tutorials/first-mvc-app/search.html
 localhost:5000/Products/название_категории/Search=поисковый_запрос/направление_сортировки/Page1/Size1 - конечный вид URL
 https://translated.turbopages.org/proxy_u/en-ru.ru.1fb381a3-6749a371-30a91e5b-74722d776562/https/bobbyhadz.com/blog/javascript-convert-object-to-query-string
-https://stackoverflow.com/questions/40330391/set-viewbag-property-in-the-constructor-of-a-asp-net-mvc-core-controller
-https://stackoverflow.com/questions/5453327/how-to-set-viewbag-properties-for-all-views-without-using-a-base-class-for-contr
+https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/search?view=aspnetcore-6.0

@@ -250,9 +250,9 @@ public class ProductControllerTests
         }).AsQueryable<Product>());
         mockRepository.Setup(mr => mr.Categories).Returns((new Category[]
         {
-                new Category{CategoryID = 1, CategoryName = "C1" },
-                new Category{CategoryID = 2, CategoryName = "C2" },
-                new Category{CategoryID = 3, CategoryName = "C3" }
+            new Category{CategoryID = 1, CategoryName = "C1" },
+            new Category{CategoryID = 2, CategoryName = "C2" },
+            new Category{CategoryID = 3, CategoryName = "C3" }
         }).AsQueryable<Category>());
         ProductController productController = new(mockRepository.Object);
         //Act
@@ -273,5 +273,79 @@ public class ProductControllerTests
         Assert.Equal("P3", resultNameDesc.Products.Skip(4).FirstOrDefault()!.ProductName);
         Assert.Equal("P2", resultNameDesc.Products.Skip(5).FirstOrDefault()!.ProductName);
         Assert.Equal("P1", resultNameDesc.Products.Skip(6).FirstOrDefault()!.ProductName);
+    }
+    [Fact]
+    public void Can_Right_Sort_Product_On_Price()
+    {
+        //Arrange
+        Mock<IProductRepository> mockRepository = new Mock<IProductRepository>();
+        mockRepository.Setup(mr => mr.Products).Returns((new Product[]
+        {
+            new Product{ProductID = 7, ProductName = "P1", CategoryID = 1, ProductPrice=1.00M},
+            new Product{ProductID = 4, ProductName = "P2", CategoryID = 2, ProductPrice=2.00M},
+            new Product{ProductID = 3, ProductName = "P3", CategoryID = 1, ProductPrice=3.00M},
+            new Product{ProductID = 2, ProductName = "P4", CategoryID = 2, ProductPrice=4.00M},
+            new Product{ProductID = 6, ProductName = "P5", CategoryID = 3, ProductPrice=5.00M},
+            new Product{ProductID = 5, ProductName = "P6", CategoryID = 1, ProductPrice=6.00M},
+            new Product{ProductID = 1, ProductName = "P7", CategoryID = 2, ProductPrice=7.00M}
+        }).AsQueryable<Product>());
+        mockRepository.Setup(mr => mr.Categories).Returns((new Category[]
+        {
+            new Category{CategoryID = 1, CategoryName = "C1" },
+            new Category{CategoryID = 2, CategoryName = "C2" },
+            new Category{CategoryID = 3, CategoryName = "C3" }
+        }).AsQueryable<Category>());
+        ProductController productController = new(mockRepository.Object);
+        //Act
+        ProductsListViewModel? resultPriceAsc = productController.ProductList(null, SortOrder.PriceAsc, 1, 10)?.ViewData.Model as ProductsListViewModel ?? new();
+        ProductsListViewModel? resultPriceDesc = productController.ProductList(null, SortOrder.PriceDesc, 1, 10)?.ViewData.Model as ProductsListViewModel ?? new();
+        //Assert
+        Assert.Equal("P1", resultPriceAsc.Products.FirstOrDefault()!.ProductName);
+        Assert.Equal("P2", resultPriceAsc.Products.Skip(1).FirstOrDefault()!.ProductName);
+        Assert.Equal("P3", resultPriceAsc.Products.Skip(2).FirstOrDefault()!.ProductName);
+        Assert.Equal("P4", resultPriceAsc.Products.Skip(3).FirstOrDefault()!.ProductName);
+        Assert.Equal("P5", resultPriceAsc.Products.Skip(4).FirstOrDefault()!.ProductName);
+        Assert.Equal("P6", resultPriceAsc.Products.Skip(5).FirstOrDefault()!.ProductName);
+        Assert.Equal("P7", resultPriceAsc.Products.Skip(6).FirstOrDefault()!.ProductName);
+        Assert.Equal("P7", resultPriceDesc.Products.FirstOrDefault()!.ProductName);
+        Assert.Equal("P6", resultPriceDesc.Products.Skip(1).FirstOrDefault()!.ProductName);
+        Assert.Equal("P5", resultPriceDesc.Products.Skip(2).FirstOrDefault()!.ProductName);
+        Assert.Equal("P4", resultPriceDesc.Products.Skip(3).FirstOrDefault()!.ProductName);
+        Assert.Equal("P3", resultPriceDesc.Products.Skip(4).FirstOrDefault()!.ProductName);
+        Assert.Equal("P2", resultPriceDesc.Products.Skip(5).FirstOrDefault()!.ProductName);
+        Assert.Equal("P1", resultPriceDesc.Products.Skip(6).FirstOrDefault()!.ProductName);
+    }
+    [Fact]
+    public void Can_Right_Sort_Product_On_Default()
+    {
+        //Arrange
+        Mock<IProductRepository> mockRepository = new Mock<IProductRepository>();
+        mockRepository.Setup(mr => mr.Products).Returns((new Product[]
+        {
+            new Product{ProductID = 7, ProductName = "P1", CategoryID = 1, ProductPrice=1.00M},
+            new Product{ProductID = 4, ProductName = "P2", CategoryID = 2, ProductPrice=2.00M},
+            new Product{ProductID = 3, ProductName = "P3", CategoryID = 1, ProductPrice=3.00M},
+            new Product{ProductID = 2, ProductName = "P4", CategoryID = 2, ProductPrice=4.00M},
+            new Product{ProductID = 6, ProductName = "P5", CategoryID = 3, ProductPrice=5.00M},
+            new Product{ProductID = 5, ProductName = "P6", CategoryID = 1, ProductPrice=6.00M},
+            new Product{ProductID = 1, ProductName = "P7", CategoryID = 2, ProductPrice=7.00M}
+        }).AsQueryable<Product>());
+        mockRepository.Setup(mr => mr.Categories).Returns((new Category[]
+        {
+            new Category{CategoryID = 1, CategoryName = "C1" },
+            new Category{CategoryID = 2, CategoryName = "C2" },
+            new Category{CategoryID = 3, CategoryName = "C3" }
+        }).AsQueryable<Category>());
+        ProductController productController = new(mockRepository.Object);
+        //Act
+        ProductsListViewModel? resultPriceNeutral = productController.ProductList(null, SortOrder.Neutral, 1, 10)?.ViewData.Model as ProductsListViewModel ?? new();
+        //Assert
+        Assert.Equal("P7", resultPriceNeutral.Products.FirstOrDefault()!.ProductName);
+        Assert.Equal("P4", resultPriceNeutral.Products.Skip(1).FirstOrDefault()!.ProductName);
+        Assert.Equal("P3", resultPriceNeutral.Products.Skip(2).FirstOrDefault()!.ProductName);
+        Assert.Equal("P2", resultPriceNeutral.Products.Skip(3).FirstOrDefault()!.ProductName);
+        Assert.Equal("P6", resultPriceNeutral.Products.Skip(4).FirstOrDefault()!.ProductName);
+        Assert.Equal("P5", resultPriceNeutral.Products.Skip(5).FirstOrDefault()!.ProductName);
+        Assert.Equal("P1", resultPriceNeutral.Products.Skip(6).FirstOrDefault()!.ProductName);
     }
 }

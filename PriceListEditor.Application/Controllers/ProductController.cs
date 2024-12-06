@@ -20,9 +20,7 @@ public class ProductController : Controller
         ViewBag.NameSortOrder = sortOrder == SortOrder.NameDesc ? SortOrder.NameAsc : SortOrder.NameDesc;
         ViewBag.PriceSortingText = sortOrder != SortOrder.PriceDesc ? "От дорогих к дешёвым" : "От дешёвых к дорогим";
         ViewBag.NameSortingText = sortOrder != SortOrder.NameDesc ? "От Я до А" : "От А до Я";
-        var decoded = HttpUtility.HtmlDecode(category);
-        //Category? CurrentCategory = category == null ? null : productRepository.Categories.Where(e => e.CategoryName == category).FirstOrDefault();
-        Category? CurrentCategory = category == null ? null : productRepository.Categories.Where(e => e.CategoryName == HttpUtility.HtmlDecode(category)).FirstOrDefault();//maybe this look like until page size selector is not tag hepler(because hardcode redirect from JS script from view)
+        Category? CurrentCategory = category == null ? null : productRepository.Categories.Where(e => e.CategoryName == category).FirstOrDefault();
         if (CurrentCategory == null && category!=null)//check if category not right transferred to prodcut controller 
         {
             category = null;

@@ -10,18 +10,14 @@
 -try to make another in another list some features with items of list without page reloading 
 
 make at now
-- fix enable sorting after select product page or category
-- set value of new page size in page size selector view component
-- fix InvalidOperationException after change page size when category is selected (rework page size selector to tag helper or use redirect controller action asp .net core)
-- save selected page size value after page redirecting
-- unit test for name descending
-- unit test for name ascending
-
-make in future
-- fix old unit test
-- make unit tests for price sort order
 - unit test for price descending
 - unit test for price ascending
 - unit test for neutral sorting
-- add sorting feature(see on metainit - link in DevNote txt) 
-- try to add search feature(see on links in DevNote txt) 
+- fix old unit test (delete unit test of showing selected category - because in view component it no longer availiable)
+- make unit tests for price sort order
+- add sorting feature
+- clean product controller code
+- add design of submit button in page size selector
+
+make in future
+- try to add search feature(see on links in DevNote txt - https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/search?view=aspnetcore-6.0) 

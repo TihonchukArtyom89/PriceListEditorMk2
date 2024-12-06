@@ -2,7 +2,7 @@
 
 <form method="post" id=@("form"+@Model.PageViewModel.Pseudonym+"PageSizeSelector") asp-controller="Product" asp-action="RedirectWithPageSizeSelected" asp-route-category="@ViewBag.SelectedCategory" asp-route-productPage="@ViewBag.SelectedPage" asp-route-sortOrder="@ViewBag.SortOrder">
     <div class="d-grip gap-2">
-        <b>Выберите размер страницы</b>
+        <b class="m-1">Выберите размер страницы</b>
         <select id="pageSizeSelector" name="pageSize">
             @foreach (int pageSize in Model.PageSizes)
             {
@@ -16,6 +16,6 @@
                 }
             }
         </select>
-        <button id="submitButton" type="submit">Выбрать</button>
+        <button id="submitButton" type="submit" class="btn btn-outline-secondary btn-sm">Выбрать</button>
     </div>
 </form>
