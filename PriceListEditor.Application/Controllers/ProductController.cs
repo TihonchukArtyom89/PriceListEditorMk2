@@ -12,7 +12,7 @@ public class ProductController : Controller
     {
         productRepository = _productRepository;
     }
-    public ViewResult ProductList(string? category, SortOrder sortOrder = SortOrder.Neutral, int productPage = 1, int pageSize = 1)
+    public ViewResult ProductList(string? category, string? searchString, SortOrder sortOrder = SortOrder.Neutral, int productPage = 1, int pageSize = 1)
     {
         ViewBag.SelectedPageSize = pageSize;
         ViewBag.SelectedCategory = category;
@@ -21,13 +21,24 @@ public class ProductController : Controller
         ViewBag.PriceSortingText = sortOrder != SortOrder.PriceDesc ? "От дорогих к дешёвым" : "От дешёвых к дорогим";
         ViewBag.NameSortingText = sortOrder != SortOrder.NameDesc ? "От Я до А" : "От А до Я";
         Category? CurrentCategory = category == null ? null : productRepository.Categories.Where(e => e.CategoryName == category).FirstOrDefault();
-        if (CurrentCategory == null && category!=null)//check if category not right transferred to prodcut controller 
+        if (CurrentCategory == null && category != null)//check if category not right transferred to product controller 
         {
             category = null;
             CurrentCategory = null;
         }
         IEnumerable<Product> products = productRepository.Products.Where(p => CurrentCategory == null || p.CategoryID == CurrentCategory.CategoryID).OrderBy(p => p.ProductID).Skip((productPage - 1) * pageSize).Take(pageSize);
-        if(products.Count() == 0 && productPage != 1)
+        string namePlaceholder = "Нет в наличии!";
+        string descriptionPlaceholder = "Продуктов категории " + (CurrentCategory ?? new Category() { CategoryName = "Категория не указана" }).CategoryName + " не имеется!";
+        if (!String.IsNullOrEmpty(searchString))
+        {
+            ViewBag.SearchString = searchString;
+            namePlaceholder = "Не найдено!";
+            descriptionPlaceholder = "Продуктов с запросом '" + ViewBag.SearchString + "' нет!";
+            products = products.Where(e => e.ProductName.ToLower().Contains(searchString.ToLower()) || e.ProductDescription.ToLower().Contains(searchString.ToLower()));
+        }
+        //products = productRepository.Products.Where(p => CurrentCategory == null || p.CategoryID == CurrentCategory.CategoryID).OrderBy(p => p.ProductID).Skip((productPage - 1) * pageSize).Take(pageSize);
+
+        if (products.Count() == 0 && productPage != 1)
         {
             productPage = 1;
             products = productRepository.Products.Where(p => CurrentCategory == null || p.CategoryID == CurrentCategory.CategoryID).OrderBy(p => p.ProductID).Skip((productPage - 1) * pageSize).Take(pageSize);
@@ -40,11 +51,11 @@ public class ProductController : Controller
                 {
                     CategoryID = 0,
                     ProductID = 0,
-                    ProductName = "Нет в наличии!",
-                    ProductDescription = "Продуктов категории " + (CurrentCategory ?? new Category() { CategoryName = "Категория не указана" }).CategoryName + " не имеется!",
+                    ProductName = namePlaceholder,
+                    ProductDescription = descriptionPlaceholder,
                     ProductPrice = 0.00M,
                 });
-        switch(sortOrder)
+        switch (sortOrder)
         {
             case SortOrder.PriceAsc:
                 products = products.OrderBy(e => e.ProductPrice);
@@ -84,15 +95,15 @@ public class ProductController : Controller
     [HttpPost]
     public IActionResult RedirectWithPageSizeSelected(string? category, SortOrder sortOrder = SortOrder.Neutral, int productPage = 1, int pageSize = 1)
     {
-        if(sortOrder == SortOrder.NameAsc || sortOrder == SortOrder.NameDesc)
+        if (sortOrder == SortOrder.NameAsc || sortOrder == SortOrder.NameDesc)
         {
             sortOrder = sortOrder == SortOrder.NameDesc ? SortOrder.NameAsc : SortOrder.NameDesc;
         }
-        if(sortOrder == SortOrder.PriceAsc || sortOrder == SortOrder.PriceDesc)
+        if (sortOrder == SortOrder.PriceAsc || sortOrder == SortOrder.PriceDesc)
         {
             sortOrder = sortOrder == SortOrder.PriceDesc ? SortOrder.PriceAsc : SortOrder.PriceDesc;
         }
         ViewBag.SelectedPageSize = pageSize;
-        return RedirectToAction("ProductList", "Product", new { category = category, sortOrder = sortOrder, productPage = productPage, pageSize=pageSize});
+        return RedirectToAction("ProductList", "Product", new { category = category, sortOrder = sortOrder, productPage = productPage, pageSize = pageSize });
     }
 }

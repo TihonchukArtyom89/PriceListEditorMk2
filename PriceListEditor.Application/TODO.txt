@@ -10,14 +10,13 @@
 -try to make another in another list some features with items of list without page reloading 
 
 make at now
-- unit test for price descending
-- unit test for price ascending
-- unit test for neutral sorting
-- fix old unit test (delete unit test of showing selected category - because in view component it no longer availiable)
-- make unit tests for price sort order
-- add sorting feature
-- clean product controller code
-- add design of submit button in page size selector
+- change product controller to use search (ProductController cs in Controller folder)
+- change product list view to use search (ProductList cshtml cs in Views/Product folder)
+- remove price value when search result is zero
 
 make in future
+- add case insensitive ability to search different things and get different values on presetted options 
+- add ability to change page of search result
+- synchronize number of search results and number of pages
+- save the search string after page redirect
 - try to add search feature(see on links in DevNote txt - https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/search?view=aspnetcore-6.0) 
