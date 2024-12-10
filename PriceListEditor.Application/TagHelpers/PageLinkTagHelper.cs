@@ -31,7 +31,7 @@ public class PageLinkTagHelper : TagHelper
     public string PageClassSelected { get; set; } = string.Empty;
     public string PageClassArrow { get; set; } = string.Empty;
     public SortOrder PageSortOrder { get; set; } = SortOrder.Neutral;
-    public string PageSearchString {  get; set; } = string.Empty;
+    ////public string PageSearchString {  get; set; } = string.Empty;
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
         if (ViewContext != null && PageModel != null)
@@ -77,7 +77,7 @@ public class PageLinkTagHelper : TagHelper
         PageUrlValues["productPage"] = pageNumber;
         PageUrlValues["pageSize"] = (PageModel ?? new()).PageSize;
         PageUrlValues["sortOrder"] = PageSortOrder;
-        PageUrlValues["searchString"] = PageSearchString;
+        //PageUrlValues["searchString"] = PageSearchString;
         pageLink.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
         pageLink.AddCssClass(css1);
         pageLink.AddCssClass(css2);

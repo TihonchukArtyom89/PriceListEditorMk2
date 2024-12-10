@@ -10,13 +10,16 @@
 -try to make another in another list some features with items of list without page reloading 
 
 make at now
-- change product controller to use search (ProductController cs in Controller folder)
-- change product list view to use search (ProductList cshtml cs in Views/Product folder)
-- remove price value when search result is zero
+- add case insensitive ability to search different things and get different values on presetted options 
+- save the search string after get search result
+- synchronize number of search results and number of pages
+- add ability to change page of search result
+- save the search string after page redirect
 
 make in future
-- add case insensitive ability to search different things and get different values on presetted options 
-- add ability to change page of search result
-- synchronize number of search results and number of pages
-- save the search string after page redirect
+- search at all products before divide at pages
+- make product list page 1 if product count is less then a current product list page
+- add unit tests for search (check if the result on some equal expected)
+- add unit tests for sorting (check if the result on some equal expected)
+- rework sorting feature (at first sort then pagination)
 - try to add search feature(see on links in DevNote txt - https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/search?view=aspnetcore-6.0) 

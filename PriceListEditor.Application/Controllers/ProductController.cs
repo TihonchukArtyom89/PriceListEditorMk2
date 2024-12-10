@@ -26,23 +26,24 @@ public class ProductController : Controller
             category = null;
             CurrentCategory = null;
         }
-        IEnumerable<Product> products = productRepository.Products.Where(p => CurrentCategory == null || p.CategoryID == CurrentCategory.CategoryID).OrderBy(p => p.ProductID).Skip((productPage - 1) * pageSize).Take(pageSize);
+        IEnumerable<Product> products = productRepository.Products.Where(p => CurrentCategory == null || p.CategoryID == CurrentCategory.CategoryID).OrderBy(p => p.ProductID);
         string namePlaceholder = "Нет в наличии!";
         string descriptionPlaceholder = "Продуктов категории " + (CurrentCategory ?? new Category() { CategoryName = "Категория не указана" }).CategoryName + " не имеется!";
+        int totalItems = category == null ? productRepository.Products.Count() : productRepository.Products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count();
         if (!String.IsNullOrEmpty(searchString))
         {
             ViewBag.SearchString = searchString;
             namePlaceholder = "Не найдено!";
             descriptionPlaceholder = "Продуктов с запросом '" + ViewBag.SearchString + "' нет!";
             products = products.Where(e => e.ProductName.ToLower().Contains(searchString.ToLower()) || e.ProductDescription.ToLower().Contains(searchString.ToLower()));
+            totalItems = category == null ? products.Count() : products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count();
         }
-        //products = productRepository.Products.Where(p => CurrentCategory == null || p.CategoryID == CurrentCategory.CategoryID).OrderBy(p => p.ProductID).Skip((productPage - 1) * pageSize).Take(pageSize);
-
         if (products.Count() == 0 && productPage != 1)
         {
             productPage = 1;
-            products = productRepository.Products.Where(p => CurrentCategory == null || p.CategoryID == CurrentCategory.CategoryID).OrderBy(p => p.ProductID).Skip((productPage - 1) * pageSize).Take(pageSize);
+            products = productRepository.Products.Where(p => CurrentCategory == null || p.CategoryID == CurrentCategory.CategoryID).OrderBy(p => p.ProductID);
         }
+        products = products.Skip((productPage - 1) * pageSize).Take(pageSize);
         ViewBag.ProductCount = products.Count();
         ViewBag.SelectedPage = productPage;
         products = products.Count() != 0 ? products :
@@ -85,7 +86,7 @@ public class ProductController : Controller
             {
                 CurrenPage = ViewBag.SelectedPage,
                 PageSize = pageSize,
-                TotalItems = category == null ? productRepository.Products.Count() : productRepository.Products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count(),
+                TotalItems = totalItems,
                 Pseudonym = "Products"
             },
             CurrentCategory = (CurrentCategory ?? new Category { CategoryName = null ?? "" }).CategoryName,
