@@ -10,16 +10,20 @@
 -try to make another in another list some features with items of list without page reloading 
 
 make at now
-- add case insensitive ability to search different things and get different values on presetted options 
-- save the search string after get search result
-- synchronize number of search results and number of pages
-- add ability to change page of search result
-- save the search string after page redirect
+- fix old unit tests
+- fix one warning
+- add unit tests for sorting
+- fix page redirect in search result
+- clean code
+- fix old unit tests (Can_Paginate,Can_Send_Pagination_View_Model) 
+- update SeedData cs in models folder (add items to retrieve results from different categories)
 
 make in future
+- fix old unit tests (Can_Redirect_To_First_Page_When_Products_Count_Is_Zero) -break after move to the top search feature
+- fix old unit tests (3 sorting unit tests)
+- fix page redirect in search result after changing page size (make search in all products instead)
 - search at all products before divide at pages
 - make product list page 1 if product count is less then a current product list page
 - add unit tests for search (check if the result on some equal expected)
-- add unit tests for sorting (check if the result on some equal expected)
 - rework sorting feature (at first sort then pagination)
 - try to add search feature(see on links in DevNote txt - https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/search?view=aspnetcore-6.0) 

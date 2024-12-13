@@ -21,15 +21,29 @@ public class ProductController : Controller
         ViewBag.PriceSortingText = sortOrder != SortOrder.PriceDesc ? "От дорогих к дешёвым" : "От дешёвых к дорогим";
         ViewBag.NameSortingText = sortOrder != SortOrder.NameDesc ? "От Я до А" : "От А до Я";
         Category? CurrentCategory = category == null ? null : productRepository.Categories.Where(e => e.CategoryName == category).FirstOrDefault();
+        IEnumerable<Product> products = productRepository.Products;
+        string namePlaceholder = "Нет в наличии!";
+        string descriptionPlaceholder = "Продуктов категории " + (CurrentCategory ?? new Category() { CategoryName = "Категория не указана" }).CategoryName + " не имеется!";
+        //int totalItems;
+        //if (!String.IsNullOrEmpty(searchString))
+        //{
+        //    ViewBag.SearchString = searchString;
+        //    namePlaceholder = "Не найдено!";
+        //    descriptionPlaceholder = "Продуктов с запросом '" + ViewBag.SearchString + "' нет!";
+        //    products = products.Where(e => e.ProductName.ToLower().Contains(searchString.ToLower()) || e.ProductDescription.ToLower().Contains(searchString.ToLower()));
+        //    totalItems = category == null ? products.Count() : products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count();
+        //}
+        //else
+        //{
+        //    totalItems = category == null ? productRepository.Products.Count() : productRepository.Products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count();
+        //}
+
+        int totalItems = category == null ? productRepository.Products.Count() : productRepository.Products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count();
         if (CurrentCategory == null && category != null)//check if category not right transferred to product controller 
         {
             category = null;
             CurrentCategory = null;
         }
-        IEnumerable<Product> products = productRepository.Products.Where(p => CurrentCategory == null || p.CategoryID == CurrentCategory.CategoryID).OrderBy(p => p.ProductID);
-        string namePlaceholder = "Нет в наличии!";
-        string descriptionPlaceholder = "Продуктов категории " + (CurrentCategory ?? new Category() { CategoryName = "Категория не указана" }).CategoryName + " не имеется!";
-        int totalItems = category == null ? productRepository.Products.Count() : productRepository.Products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count();
         if (!String.IsNullOrEmpty(searchString))
         {
             ViewBag.SearchString = searchString;
@@ -38,6 +52,11 @@ public class ProductController : Controller
             products = products.Where(e => e.ProductName.ToLower().Contains(searchString.ToLower()) || e.ProductDescription.ToLower().Contains(searchString.ToLower()));
             totalItems = category == null ? products.Count() : products.Where(e => e.CategoryID == CurrentCategory!.CategoryID).Count();
         }
+        //else
+        //{
+        //    totalItems ;
+        //}
+        products = products.Where(p => CurrentCategory == null || p.CategoryID == CurrentCategory.CategoryID).OrderBy(p => p.ProductID);
         if (products.Count() == 0 && productPage != 1)
         {
             productPage = 1;

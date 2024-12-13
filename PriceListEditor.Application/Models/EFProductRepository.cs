@@ -8,7 +8,7 @@ public class EFProductRepository : IProductRepository
         context = ctx;
     }
     public IQueryable<Product> Products => context.Products;
-    public IQueryable<Category>? Categories => context.Categories;
+    public IQueryable<Category> Categories => context.Categories;
     //public void CreateProduct(Product p)
     //{
     //    context.Add(p);
